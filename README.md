@@ -1,12 +1,14 @@
 # 🧠 Quiz App
 
-A simple yet engaging quiz application built with **React**. The app fetches quiz questions from the [Open Trivia DB API](https://opentdb.com/), displays multiple-choice questions, and evaluates user responses with a clean and responsive UI.
+A simple yet engaging quiz application built with React. It fetches multiple-choice questions from the Open Trivia DB API, presents them in a clean and responsive interface, and evaluates user responses. At the end, users receive a tailored message based on their score for a more personalised experience.
 
-<img src="src/images/Quizlet-select-options.png" alt="Quizlet select option view" width="400">
+<img src="src/images/Quizlet-select-options-page.png" alt="Quizlet select option view" width="600">
 
 *Quiz screen: Users select answers for each question*
 
-<img src="src/images/Quizlet-results.png" alt="Quizlet results view" width="400">
+<img src="src/images/Quizlet-results-top-of-page.png" alt="Quizlet results view top of page" width="600">
+
+<img src="src/images/Quizlet-results-bottom-of-page.png" alt="Quizlet results view bottom of page" width="600">
 
 *Results screen: Displays score and a phrase based on the users score*
 
@@ -37,7 +39,7 @@ This project helped me understand:
 
 * Fetches quiz questions dynamically from an external API
 * Multiple-choice question cards with instant feedback
-* Score calculation and randomized encouragement phrases
+* Score calculation and encouragement phrases based on score
 * "Play Again" functionality for a fresh quiz each time
 * Confetti celebration effect on quiz completion
 * Modular, reusable React components
