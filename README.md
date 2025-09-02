@@ -1,70 +1,111 @@
-# Getting Started with Create React App
+# 🧠 Quiz App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A simple yet engaging quiz application built with **React**. The app fetches quiz questions from the [Open Trivia DB API](https://opentdb.com/), displays multiple-choice questions, and evaluates user responses with a clean and responsive UI.
 
-## Available Scripts
+<img src="src/images/Quizlet-select-options.png" alt="Quizlet select option view" width="400">
 
-In the project directory, you can run:
+*Quiz screen: Users select answers for each question*
 
-### `npm start`
+<img src="src/images/Quizlet-results.png" alt="Quizlet results view" width="400">
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+*Results screen: Displays score and a phrase based on the users score*
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 🎯 Overview
 
-### `npm test`
+This project helped me understand:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+* React's component-based structure
+* API integration with **fetch**
+* State management using React Hooks
+* Conditional rendering for UI updates
+* Managing user input and scoring logic
+* Modular code organization for scalability
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 🛠 Tech Stack
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+* **React** – Component-based frontend framework
+* **JavaScript (ES6+)** – Core logic and interactivity
+* **HTML5 / CSS3** – Responsive layout and styling
+* **React Confetti** – Fun celebration effects for correct answers
+* **Open Trivia DB API** – Source of quiz questions
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+---
 
-### `npm run eject`
+## ✨ Key Features
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+* Fetches quiz questions dynamically from an external API
+* Multiple-choice question cards with instant feedback
+* Score calculation and randomized encouragement phrases
+* "Play Again" functionality for a fresh quiz each time
+* Confetti celebration effect on quiz completion
+* Modular, reusable React components
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+---
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## ⚙️ Build Process
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+1. **Clone the repository:**
 
-## Learn More
+   ```bash
+   git clone https://github.com/your-username/quiz-app.git
+   cd quiz-app
+   ```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+2. **Install dependencies:**
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+   ```bash
+   npm install
+   ```
 
-### Code Splitting
+3. **Start the development server:**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+   ```bash
+   npm start
+   ```
 
-### Analyzing the Bundle Size
+4. **Build for production:**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+   ```bash
+   npm run build
+   ```
 
-### Making a Progressive Web App
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## 🧪 Testing
 
-### Advanced Configuration
+This project includes a simple test using **React Testing Library**:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+```bash
+npm test
+```
 
-### Deployment
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## 📚 Lessons Learned
 
-### `npm run build` fails to minify
+* **React Hooks:** Managing state with `useState` and lifecycle with `useEffect`
+* **API Integration:** Fetching and transforming external data for UI
+* **Component Design:** Breaking the UI into small, reusable components
+* **Conditional Rendering:** Dynamic button states, correct/wrong answers, and results
+* **Randomization:** Generating random encouragement phrases for variety
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+---
+
+## 🧩 Areas for Improvement
+
+* Add mobile-responsive design
+* Implement user authentication for score tracking
+* Include loading and error states
+* Add difficulty levels and quiz categories
+* Expand unit tests for all components
+* Improve accessibility with ARIA roles
+
+---
+
+## 🚀 Future Enhancements
+
+* **Leaderboard** for tracking top scores
+* **Offline mode** with local storage caching
+* **Theme customization** (dark/light mode)

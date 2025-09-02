@@ -1,0 +1,263 @@
+/* Reset box sizing for consistent layout calculations */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* App root container: vertical stack, centered, with gradient background */
+.app {
+  display: flex;
+  width: 100vw;
+  padding: 64px;
+  flex-direction: column;
+  align-items: center;
+  gap: 64px;
+  background: linear-gradient(180deg, #8439F6 0%, #5A27A8 100%), #FEFEFE;
+  position: relative;
+}
+
+/* Main content area: column layout, centered horizontally, left-aligned items */
+main {
+  z-index: 1;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 32px;
+}
+
+/* Keep header above background decorations */
+header {
+  z-index: 1;
+}
+
+/* Remove default margins on headings and paragraph for tighter control */
+h1,
+h2,
+h3,
+h4,
+p {
+  margin: 0px;
+}
+
+/* Full-width decorative ellipse background image */
+.dark-purple-background-ellipse {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+}
+
+/* Header: logo sizing */
+header .logo {
+  width: 187px;
+  height: 40px;
+}
+
+/* Header: back button placement and cursor */
+header .back-button {
+  width: 24px;
+  height: 18px;
+  position: absolute;
+  left: 0px;
+  cursor: pointer;
+}
+
+/* Header container: centered content with relative positioning for children */
+header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-self: stretch;
+  width: 100%;
+  position: relative;
+}
+
+/* Answer option button: pill styling and interactive feel */
+.answer-button {
+  display: flex;
+  padding: 12px 24px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 100px;            
+  border: 1.2px solid #430D97;  
+  background: none;
+  color: #430D97;
+  font-family: Nunito;
+  font-size: 1em;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Hide correctness icon by default; shown in .correct/.wrong states */
+.answer-button img {
+  display: none;
+}
+
+/* Hover feedback for selectable answers */
+.answer-button:hover {
+  background-color: #E4D9F5;
+}
+
+/* Selected state before submission */
+.answer-button.clicked {
+  background: #8439F6;
+  color: white;
+}
+
+/* Disabled button styling (generic button element, e.g., after submission) */
+button:disabled {
+  border: 1.2px solid #5D5D5D;
+  background: #F5F5F5;
+  color: #5D5D5D;         
+  cursor: not-allowed;
+}
+
+/* Reveal icon when answer is marked correct/wrong */
+.answer-button.correct img {
+  display: block;
+}
+.answer-button.wrong img {
+  display: block;
+}
+
+/* Wrong answer: red-tinted styling */
+.answer-button.wrong {
+  border: 1.2px solid #900032;
+  background: #FFD5DA;
+  color: #000;
+}
+
+/* Correct answer: green-tinted styling */
+.answer-button.correct {
+  border: 1.2px solid #2B8054;
+  background: #D2EDDF;
+  color: #000;
+}
+
+/* Question card container */
+.question-card {
+  display: flex;
+  padding: 24px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
+  align-self: stretch;
+  border-radius: 25px;
+  background: #FFF;
+}
+
+/* Question metadata (e.g., numbering) */
+.question-card h3 {
+  color: #5D5D5D;
+  text-align: center;
+  font-family: Nunito;
+  font-size: 0.938em;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+/* Main question text */
+.question-card h2 {
+  color: #000;
+  font-family: Nunito;
+  font-size: 1.5em;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+}
+
+/* Options container: wraps buttons nicely with gaps */
+.question-card .options {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  gap: 16px 16px;
+  flex-wrap: wrap;
+}
+
+/* Stack question text and options with spacing */
+.question-card .question-and-options {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+/* Option group title (if any) */
+.question-card h4 {
+  color: #000;
+  font-family: Nunito;
+  font-size: 1em;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+/* Results section container (text is white over purple bg) */
+.results-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  align-self: stretch;
+  color: #FFF;
+  font-family: Nunito;
+  font-style: normal;
+}
+
+/* Results primary action button (Submit / Play again) */
+.results-card button {
+  display: flex;
+  padding: 12px 24px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 100px;
+  background: #D2EDDF;        
+  box-shadow: 4px 4px 0 0 #2B8053;
+  color: #000;
+  font-family: Nunito;
+  font-size: 1.25em;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Results button hover state */
+.results-card button:hover {
+  background-color: #B0C7BB;
+}
+
+/* Results message layout */
+.results-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+/* Results message heading */
+.results-message h2 {
+  color: #FFF;
+  font-family: Nunito;
+  font-size: 1.5em;
+  font-weight: 800;
+}
+
+/* Results message text (score line) */
+.results-message p {
+  font-size: 1.25em;
+  font-weight: 700;
+}
