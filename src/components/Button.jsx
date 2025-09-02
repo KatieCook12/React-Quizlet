@@ -26,7 +26,7 @@ export default function Button({
   );
 
   // Pick the correct icon based on state
-  const icon = showAsCorrect
+  const icon = showAsCorrect && isSelected
     ? GreenCircleWhiteTick
     : showAsWrong
     ? RedCircleWhiteCross
