@@ -160,8 +160,9 @@ button:disabled {
   font-family: Nunito;
   font-size: 0.938em;
   font-style: normal;
-  font-weight: 600;
+  font-weight: 700;
   line-height: normal;
+  color: #5D5D5D;
 }
 
 /* Main question text */
@@ -197,7 +198,7 @@ button:disabled {
   font-family: Nunito;
   font-size: 1em;
   font-style: normal;
-  font-weight: 600;
+  font-weight: 700;
   line-height: normal;
 }
 
