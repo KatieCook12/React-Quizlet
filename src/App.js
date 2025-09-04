@@ -17,15 +17,54 @@ import { decode } from 'html-entities';
 import Confetti from 'react-confetti';
 
 // Open Trivia DB: 5 multiple-choice questions (stable top-level const)
-const API_URL = "https://opentdb.com/api.php?amount=5&type=multiple";
+const API_URL = "https://opentdb.com/api.php?amount=5&difficulty=easy&type=multiple";
 
 // Utility: shallow shuffle for answer options (stable top-level function)
 const shuffleOptions = (array) => {
   return [...array].sort(() => Math.random() - 0.5);
 };
 
+/**
+ * useWindowSize
+ * A React hook that returns the current viewport dimensions.
+ * It listens for window "resize" events and updates { width, height }.
+ * Note: requires a browser environment (depends on `window`).
+ */
+function useWindowSize() {
+
+  // Helper to read the current viewport size from the window object
+  const getSize = () => ({
+    width: window.innerWidth,
+    height: window.innerHeight,
+  });
+
+  // Initialize state with the current size.
+  // Passing the function defers the call until the initial render.
+  const [size, setSize] = React.useState(getSize);
+
+  // Set up the resize listener once on mount, and clean it up on unmount.
+  React.useEffect(() => {
+
+    // Handler that updates state with the latest size
+    const onResize = () => setSize(getSize());
+
+    // Subscribe to resize events
+    window.addEventListener('resize', onResize);
+
+    // Cleanup: remove listener to avoid memory leaks
+    return () => window.removeEventListener('resize', onResize);
+
+  }, []);
+
+  // Return the latest { width, height } to the component using this hook
+  return size;
+}
+
 function App() {
   // Quiz state
+
+  // Get the window size
+  const { width, height } = useWindowSize();
 
   // [{question, options[], correct_answer}]
   const [quizData, setQuizData] = React.useState([]);
@@ -134,10 +173,11 @@ function App() {
         {/* Confetti celebration only after submission */}
         {submitted ? (
           <Confetti
-            width={1600} 
-            height={1743.6}
-            gravity={0.2}
-          />
+          width={width}
+          height={height}
+          gravity={0.2}
+          style={{ position: 'fixed', inset: 0, pointerEvents: 'none' }}
+        />
         ) : null}
       </main>
 
