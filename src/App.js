@@ -175,7 +175,6 @@ function App() {
           <Confetti
           width={width}
           height={height}
-          gravity={0.2}
           style={{ position: 'fixed', inset: 0, pointerEvents: 'none' }}
         />
         ) : null}
