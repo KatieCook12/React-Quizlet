@@ -5,7 +5,7 @@ export default function ResultsSection({
   onButtonClick,
   submitted,
   scoreResults,
-  numberOfQuestions
+  numberOfQuestions 
 }) {
 
   // Compute score percentage safely (avoid divide-by-zero)
