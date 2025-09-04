@@ -255,10 +255,12 @@ button:disabled {
   font-family: Nunito;
   font-size: 1.5em;
   font-weight: 800;
+  text-align: center;
 }
 
 /* Results message text (score line) */
 .results-message p {
   font-size: 1.25em;
   font-weight: 700;
+  text-align: center;
 }
