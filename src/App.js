@@ -16,11 +16,15 @@ import { decode } from 'html-entities';
 // Celebration effect after submission
 import Confetti from 'react-confetti';
 
-function App() {
-  
-  // Open Trivia DB: 5 multiple-choice questions
-  const API_URL = "https://opentdb.com/api.php?amount=5&type=multiple";
+// Open Trivia DB: 5 multiple-choice questions (stable top-level const)
+const API_URL = "https://opentdb.com/api.php?amount=5&type=multiple";
 
+// Utility: shallow shuffle for answer options (stable top-level function)
+const shuffleOptions = (array) => {
+  return [...array].sort(() => Math.random() - 0.5);
+};
+
+function App() {
   // Quiz state
 
   // [{question, options[], correct_answer}]
@@ -33,15 +37,10 @@ function App() {
   const [score, setScore] = React.useState(0);
   
   // Selected option index per question (or null)
-  const [answers, setAnswers] = React.useState([]);     
-
-  // Utility: shallow shuffle for answer options
-  const shuffleOptions = (array) => {
-    return [...array].sort(() => Math.random() - 0.5);
-  };
+  const [answers, setAnswers] = React.useState([]);
 
   // 1) Fetch quiz data from API and normalize it
-  const fetchQuizData = () => {
+  const fetchQuizData = React.useCallback(() => {
     fetch(API_URL)
       .then((res) => res.json())
       .then((data) => {
@@ -61,21 +60,20 @@ function App() {
           setQuizData(mapped);
           
           // Reset selections for each question
-          setAnswers(Array(mapped.length).fill(null)); 
+          setAnswers(Array(mapped.length).fill(null));
         }
       })
       .catch((err) => console.error(err));
-  };
+  }, []); // no deps needed because API_URL & shuffleOptions are top-level constants
 
   // Kick off first fetch on mount
   React.useEffect(() => {
     fetchQuizData();
-  }, []);
+  }, [fetchQuizData]);
 
   // Handle submit/play again button
   const submitButtonClicked = () => {
     if (!submitted) {
-
       // When submitting, compute the score from current selections
       const total = answers.reduce((sum, selectedIdx, i) => {
         if (selectedIdx == null) return sum; // unanswered
@@ -88,25 +86,22 @@ function App() {
       setScore(total);
       setSubmitted(true);
     } else {
-
       // Restarts game: clear state and fetch a fresh quiz
       setSubmitted(false);
       setScore(0);
 
       // optional: clear immediately before new data arrives
-      setAnswers([]);  
+      setAnswers([]);
       fetchQuizData();
     }
   };
 
   return (
     <div className='app'>
-
       {/* App header/branding */}
       <Header />
 
       <main>
-
         {/* Render each question card with its options */}
         {quizData.map((question, id) => (
           <QuestionCard
@@ -120,7 +115,6 @@ function App() {
             onSelect={(i) =>
               setAnswers((prev) => {
                 const next = [...prev];
-
                 // store the selected option index for this question
                 next[id] = i; 
                 return next;
