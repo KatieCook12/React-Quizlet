@@ -81,7 +81,6 @@ button { font-family: var(--ff-sans); }
   inset: 0 auto auto 0;
   width: 100%;
   height: auto;
-  transform: translateY(-35%);
   z-index: 0;
   pointer-events: none;
 }
