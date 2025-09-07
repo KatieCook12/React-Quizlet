@@ -1,7 +1,3 @@
-Here’s an updated README that includes the new routing, the user-selectable category & difficulty, and a note about rendering the quiz page after questions are loaded.
-
----
-
 # 🧠 Quiz App
 
 A simple yet engaging quiz application built with React and **client-side routing**. It fetches multiple-choice questions from the Open Trivia DB API, lets users **choose a category and difficulty**, presents questions in a clean interface, and evaluates responses. On completion, users get a tailored message based on their score.
@@ -143,7 +139,3 @@ npm test
 * `src/pages/Home.jsx` – Form for category/difficulty; navigates with router state.&#x20;
 * `src/pages/QuizPage.jsx` – Builds API URL from filters; renders questions & results.&#x20;
 * `src/App.js` – App routes (`/`, `/quiz`).&#x20;
-
----
-
-If you’d like, I can also add a small loading state (e.g., a skeleton or spinner) and defer rendering the question list until the fetch resolves.
