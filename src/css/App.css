@@ -1,266 +1,257 @@
-/* Reset box sizing for consistent layout calculations */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
+/* =========================================================
+   Design tokens
+   ========================================================= */
+:root {
+  /* Colors */
+  --clr-white: #FFF;
+  --clr-black: #000;
+  --clr-gray-700: #5D5D5D;
+
+  --clr-purple-900: #430D97;
+  --clr-purple-600: #8439F6;
+  --clr-purple-700: #5A27A8;
+  --clr-purple-100: #E4D9F5;
+
+  --clr-green-700: #2B8053;
+  --clr-green-100: #D2EDDF;
+
+  --clr-red-700: #900032;
+  --clr-red-100: #FFD5DA;
+
+  /* Typography */
+  --ff-sans: Nunito, system-ui, -apple-system, "Segoe UI", Roboto,
+             "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  --fw-bold: 800;
+  --fw-semi: 700;
+  --fw-med: 600;
+
+  /* Radius, spacing, shadow */
+  --radius-pill: 100px;
+  --radius-card: 25px;
+
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  --shadow-btn: 4px 4px 0 0 var(--clr-green-700);
 }
 
-/* App root container: vertical stack, centered, with gradient background */
-.app {
-  display: flex;
-  width: 100vw;
-  padding: 64px;
-  flex-direction: column;
-  align-items: center;
-  gap: 64px;
-  background: linear-gradient(180deg, #8439F6 0%, #5A27A8 100%), #FEFEFE;
+/* =========================================================
+   Reset / base
+   ========================================================= */
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body { height: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--ff-sans);
+}
+
+h1, h2, h3, h4, p { margin: 0; }
+
+button { font-family: var(--ff-sans); }
+
+/* Links */
+ a { text-decoration: none; }
+
+/* =========================================================
+   App shell
+   ========================================================= */
+#root {
   position: relative;
-}
-
-/* Main content area: column layout, centered horizontally, left-aligned items */
-main {
-  z-index: 1;
   display: flex;
   width: 100%;
+  min-height: 100vh;
+  padding: var(--space-16);
   flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 32px;
+  align-items: center;
+  gap: var(--space-16);
+  background: linear-gradient(180deg, var(--clr-purple-600) 0%, var(--clr-purple-700) 100%), #FEFEFE;
 }
 
-/* Keep header above background decorations */
-header {
-  z-index: 1;
-}
-
-/* Remove default margins on headings and paragraph for tighter control */
-h1,
-h2,
-h3,
-h4,
-p {
-  margin: 0px;
-}
-
-/* Full-width decorative ellipse background image */
+/* Decorative background ellipse — fills page width (no 100vw/scrollbar mismatch) */
 .dark-purple-background-ellipse {
-  position: absolute;
+  position: fixed;
+  inset: 0 auto auto 0;
   width: 100%;
-  top: 0;
-  left: 0;
+  height: auto;
+  transform: translateY(-35%);
+  z-index: 0;
+  pointer-events: none;
 }
 
-/* Header: logo sizing */
-header .logo {
-  width: 187px;
-  height: 40px;
+/* =========================================================
+   Global typography helpers
+   ========================================================= */
+h1 {
+  color: var(--clr-white);
+  font-size: 1.5em;
+  font-weight: var(--fw-bold);
 }
 
-/* Header: back button placement and cursor */
-header .back-button {
-  width: 24px;
-  height: 18px;
-  position: absolute;
-  left: 0px;
-  cursor: pointer;
+h2 {
+  color: var(--clr-white);
+  font-size: 1.5em;
+  font-weight: var(--fw-bold);
+  text-align: center;
 }
 
-/* Header container: centered content with relative positioning for children */
-header {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  align-self: stretch;
-  width: 100%;
-  position: relative;
+h3 {
+  color: var(--clr-gray-700);
+  text-align: center;
+  font-size: 0.938em;
+  font-weight: var(--fw-semi);
 }
 
-/* Answer option button: pill styling and interactive feel */
-.answer-button {
-  display: flex;
-  padding: 12px 24px;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  border-radius: 100px;            
-  border: 1.2px solid #430D97;  
-  background: none;
-  color: #430D97;
-  font-family: Nunito;
+h4 {
+  color: var(--clr-black);
   font-size: 1em;
-  font-style: normal;
-  font-weight: 600;
-  line-height: normal;
+  font-weight: var(--fw-semi);
+}
+
+p {
+  color: var(--clr-white);
+  font-size: 1.25em;
+  font-weight: var(--fw-semi);
+  text-align: center;
+}
+
+/* =========================================================
+   Buttons (shared)
+   ========================================================= */
+button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  padding: 12px 24px;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--clr-green-100);
+  color: var(--clr-black);
+  font-size: 1.25em;
+  font-weight: var(--fw-bold);
+  line-height: 1;
   cursor: pointer;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  box-shadow: var(--shadow-btn);
+  transition: background-color .2s ease, color .2s ease;
 }
 
-/* Hide correctness icon by default; shown in .correct/.wrong states */
-.answer-button img {
-  display: none;
-}
+button:hover { background: #B0C7BB; }
 
-/* Hover feedback for selectable answers */
-.answer-button:hover {
-  background-color: #E4D9F5;
-}
-
-/* Selected state before submission */
-.answer-button.clicked {
-  background: #8439F6;
-  color: white;
-}
-
-/* Disabled button styling (generic button element, e.g., after submission) */
 button:disabled {
-  border: 1.2px solid #5D5D5D;
+  border: 1.2px solid var(--clr-gray-700);
   background: #F5F5F5;
-  color: #5D5D5D;         
+  color: var(--clr-gray-700);
   cursor: not-allowed;
 }
 
-/* Reveal icon when answer is marked correct/wrong */
-.answer-button.correct img {
-  display: block;
-}
-.answer-button.wrong img {
-  display: block;
-}
-
-/* Wrong answer: red-tinted styling */
-.answer-button.wrong {
-  border: 1.2px solid #900032;
-  background: #FFD5DA;
-  color: #000;
-}
-
-/* Correct answer: green-tinted styling */
-.answer-button.correct {
-  border: 1.2px solid #2B8054;
-  background: #D2EDDF;
-  color: #000;
-}
-
-/* Question card container */
-.question-card {
+/* =========================================================
+   Nav
+   ========================================================= */
+nav {
+  position: relative;
+  z-index: 1; /* above background decoration */
   display: flex;
-  padding: 24px;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 18px;
-  align-self: stretch;
-  border-radius: 25px;
-  background: #FFF;
-}
-
-/* Question metadata (e.g., numbering) */
-.question-card h3 {
-  color: #5D5D5D;
-  text-align: center;
-  font-family: Nunito;
-  font-size: 0.938em;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-  color: #5D5D5D;
-}
-
-/* Main question text */
-.question-card h2 {
-  color: #000;
-  font-family: Nunito;
-  font-size: 1.5em;
-  font-style: normal;
-  font-weight: 800;
-  line-height: normal;
-}
-
-/* Options container: wraps buttons nicely with gaps */
-.question-card .options {
-  display: flex;
-  align-items: center;
-  align-content: center;
-  gap: 16px 16px;
-  flex-wrap: wrap;
-}
-
-/* Stack question text and options with spacing */
-.question-card .question-and-options {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 16px;
-}
-
-/* Option group title (if any) */
-.question-card h4 {
-  color: #000;
-  font-family: Nunito;
-  font-size: 1em;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-}
-
-/* Results section container (text is white over purple bg) */
-.results-card {
-  display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 24px;
   align-self: stretch;
-  color: #FFF;
-  font-family: Nunito;
-  font-style: normal;
+  width: 100%;
 }
 
-/* Results primary action button (Submit / Play again) */
-.results-card button {
-  display: flex;
-  padding: 12px 24px;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  border-radius: 100px;
-  background: #D2EDDF;        
-  box-shadow: 4px 4px 0 0 #2B8053;
-  color: #000;
-  font-family: Nunito;
-  font-size: 1.25em;
-  font-style: normal;
-  font-weight: 800;
-  line-height: normal;
-  border: none;
+nav .logo { width: 187px; height: 40px; }
+
+nav .back-button {
+  position: absolute;
+  left: 0;
+  width: 24px;
+  height: 18px;
   cursor: pointer;
-  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Results button hover state */
-.results-card button:hover {
-  background-color: #B0C7BB;
+/* =========================================================
+   Form / dropdowns
+   ========================================================= */
+label {
+  color: var(--clr-white);
+  font-family: var(--ff-sans);
+  font-size: 20px;
+  font-style: normal;
+  font-weight: var(--fw-semi);
+  width: 100%;
+  text-align: left;
 }
 
-/* Results message layout */
-.results-message {
+/* Hide native arrow and use custom chevron images (down/up) */
+select {
+  width: 100%;
+  border-radius: var(--radius-pill);
+  border: 1.2px solid var(--clr-white);
+  padding: 12px 44px 12px 24px;
+  color: var(--clr-white);
+  font-family: var(--ff-sans);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: var(--fw-med);
+  line-height: normal;
+  background: transparent;
+
+  /* remove native arrow */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  /* custom arrow (down) */
+  background-image: url("../images/white-arrow-facing-down.svg");
+  background-repeat: no-repeat;
+  background-position: right 24px center;
+  background-size: 14px 8px;
+  transition: box-shadow .2s ease, border-color .2s ease, background-image .15s ease;
+}
+
+/* IE/old Edge arrow */
+select::-ms-expand { display: none; }
+
+/* Focus ring + swap to 'up' arrow */
+select:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--clr-purple-600);
+  background-image: url("../images/white-arrow-facing-up.svg");
+}
+
+form {
+  width: 100%;
+  max-width: 900px;
+  gap: var(--space-16);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 16px;
 }
 
-/* Results message heading */
-.results-message h2 {
-  color: #FFF;
-  font-family: Nunito;
-  font-size: 1.5em;
-  font-weight: 800;
-  text-align: center;
+form button { width: fit-content; }
+
+.drop-down {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: var(--space-4);
+  align-self: stretch;
 }
 
-/* Results message text (score line) */
-.results-message p {
-  font-size: 1.25em;
-  font-weight: 700;
-  text-align: center;
+.drop-down-selections {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-8);
+  width: 100%;
 }
+
+/* Menu items inside the opened native dropdown */
+option { color: var(--clr-black); }

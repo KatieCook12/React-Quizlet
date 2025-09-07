@@ -1,24 +1,24 @@
 // Defines phrases shown to user, based on the user's score
 export const highScorePhrases = [
-  "Amazing job Alex!",
-  "You're a genius Alex!",
-  "Outstanding performance Alex!",
-  "Superb effort Alex!",
+  "Amazing job!",
+  "You're a genius!",
+  "Outstanding performance!",
+  "Superb effort!",
   "Well done, champ!",
-  "Brilliant work Alex!"
+  "Brilliant work!"
 ];
 
 export const lowScorePhrases = [
-  "Keep practicing Alex!",
-  "Don't give up Alex!",
-  "You'll get there Alex!",
-  "Almost there Alex!",
-  "Better luck next time Alex!"
+  "Keep practicing!",
+  "Don't give up!",
+  "You'll get there!",
+  "Almost there!",
+  "Better luck next time!"
 ];
 
 export const midScorePhrases = [
-  "Not bad Alex!",
-  "Pretty good Alex!",
-  "You did okay Alex!",
-  "Decent effort Alex!"
+  "Not bad!",
+  "Pretty good!",
+  "You did okay!",
+  "Decent effort!"
 ];

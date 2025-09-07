@@ -1,0 +1,115 @@
+/* =========================================================
+   Quiz page layout
+   ========================================================= */
+.quiz {
+  z-index: 1;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: var(--space-8);
+}
+
+/* =========================================================
+   Question card
+   ========================================================= */
+.question-card {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  align-items: flex-start;
+  align-self: stretch;
+  padding: var(--space-6);
+  border-radius: var(--radius-card);
+  background: var(--clr-white);
+}
+
+.question-card .question-and-options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  align-items: flex-start;
+}
+
+.question-card h2 {
+  color: var(--clr-black);
+  text-align: left;
+}
+
+/* Options row */
+.question-card .options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  align-items: center;
+  align-content: center;
+}
+
+/* =========================================================
+   Answer buttons (choices)
+   ========================================================= */
+.answer-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  padding: 12px 24px;
+  border-radius: var(--radius-pill);
+  border: 1.2px solid var(--clr-purple-900);
+  background: transparent;
+  color: var(--clr-purple-900);
+  font-size: 1em;
+  font-weight: var(--fw-med);
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color .2s ease, color .2s ease, border-color .2s ease;
+  box-shadow: none;
+}
+
+/* Hover (when selectable) */
+.answer-button:hover { background: var(--clr-purple-100); }
+
+/* Selected (pre-submit) */
+.answer-button.clicked {
+  background: var(--clr-purple-600);
+  color: var(--clr-white);
+}
+
+/* Hide state icon by default; show when marked */
+.answer-button img { display: none; }
+.answer-button.correct img,
+.answer-button.wrong img { display: block; }
+
+/* Marking states (post-submit) */
+.answer-button.correct {
+  border-color: var(--clr-green-700);
+  background: var(--clr-green-100);
+  color: var(--clr-black);
+}
+
+.answer-button.wrong {
+  border-color: var(--clr-red-700);
+  background: var(--clr-red-100);
+  color: var(--clr-black);
+}
+
+/* =========================================================
+   Results section
+   ========================================================= */
+.results-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-6);
+  align-self: stretch;
+  color: var(--clr-white);
+}
+
+.results-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+}
