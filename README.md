@@ -41,8 +41,15 @@ This project helped me understand:
 
 ## ✨ Key Features
 
-* **Client-side routing:** `/` (Home) and `/quiz` (Quiz) via React Router.&#x20;
-* **Configurable quiz:** Users choose **difficulty** and **category** on Home; values are read via `FormData` and sent to the Quiz page using **router state**.&#x20;
+* **Client-side routing:** `/` (Home) and `/quiz` (Quiz) via React Router&#x20;
+* **Configurable quiz:** Users choose **difficulty** and **category** on Home; values are read via `FormData` and sent to the Quiz page using **router state**&#x20;
+- **Lazy loading with `React.Suspense`:** `QuestionCard` is loaded on demand to keep initial loads snappy
+- **Accessible results announcement:** A **screen reader live region** politely announces the score without stealing focus:
+  ```jsx
+  {/* Screen reader live region: announces result without moving focus */}
+  <p className="sr-only" aria-live="polite" aria-atomic="true">
+    {submitted ? `You scored ${scoreResults} out of ${numberOfQuestions}.` : ""}
+  </p>
 * **Dynamic API URL:** Quiz page builds the OpenTDB URL from those user selections using `URLSearchParams`.&#x20;
 * Multiple-choice question cards with instant feedback
 * Score calculation and encouragement phrases based on score
@@ -112,16 +119,19 @@ npm test
 * **Routing:** Splitting flows into pages and passing state via navigation&#x20;
 * **Component Design:** Breaking the UI into small, reusable components
 * **Conditional Rendering:** Dynamic button states, correct/wrong answers, and results
+* **Accessibility & UX:** Focus management, live announcements, and smooth scrolling
+
 
 ---
 
 ## 🧩 Areas for Improvement
 
 * Add more mobile-responsive refinements
-* Implement loading and error states
+* Implement error states
 * Expand unit tests for all components
 * Improve accessibility (labels, focus styles, ARIA roles)
 * Persist scores to local storage or backend
+
 
 ---
 

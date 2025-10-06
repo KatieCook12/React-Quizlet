@@ -1,48 +1,72 @@
-// Import phrases grouped by performance tiers
+// ResultsSection.jsx
+// Displays the user's score, a motivational phrase, and the main action button.
+
+import React from "react";
 import { highScorePhrases, lowScorePhrases, midScorePhrases } from "../phrases";
 
-export default function ResultsSection({
-  onButtonClick,
-  submitted,
-  scoreResults,
-  numberOfQuestions 
-}) {
+const ResultsSection = React.forwardRef(function ResultsSection(
+  { onButtonClick, submitted, scoreResults, numberOfQuestions },
+  ref
+) {
+  const headingId = React.useId();
+  const regionId = React.useId();
 
   // Compute score percentage safely (avoid divide-by-zero)
   const percent =
     numberOfQuestions > 0 ? (scoreResults / numberOfQuestions) * 100 : 0;
 
-  // Pick the phrase list based on percentage thresholds
-  function getPhraseList() {
-    if (percent >= 80) return highScorePhrases;
-    if (percent < 40) return lowScorePhrases;
-    return midScorePhrases;
-  }
+  // Choose phrase list based on score range
+  const getPhraseList = React.useCallback(() => {
+    if (percent >= 80) return highScorePhrases || [];
+    if (percent < 40) return lowScorePhrases || [];
+    return midScorePhrases || [];
+  }, [percent]);
 
-  // Return a random phrase from the selected list
-  function getRandomPhrase() {
-    const phrases = getPhraseList();
-    return phrases[Math.floor(Math.random() * phrases.length)];
-  }
+  // Pick a random phrase once when results appear or score range changes
+  const phrase = React.useMemo(() => {
+    if (!submitted) return "";
+    const list = getPhraseList();
+    if (!list.length) return "Here are your results";
+    return list[Math.floor(Math.random() * list.length)];
+  }, [submitted, getPhraseList]);
 
-  // Button label depends on whether the quiz has been submitted
-  function isSubmitted() {
-    return submitted ? "Play again" : "Submit";
-  }
+  const buttonLabel = submitted ? "Play again" : "Submit answers";
 
   return (
-    <section className="results-card">
-        
-      {/* Show results only after submission */}
+    <section
+      id={regionId}
+      className="results-card"
+      aria-labelledby={headingId}
+      tabIndex={-1}
+      ref={ref}
+    >
+      {/* Screen reader live region: announces result without moving focus */}
+      <p className="sr-only" aria-live="polite" aria-atomic="true">
+        {submitted ? `You scored ${scoreResults} out of ${numberOfQuestions}.` : ""}
+      </p>
+
+      {/* Results section (visible after submission) */}
       {submitted ? (
         <div className="results-message">
-          <h2>{getRandomPhrase()}</h2>
-          <p>{`You scored ${scoreResults} out of ${numberOfQuestions} correct`}</p>
+          <h2 id={headingId}>{phrase}</h2>
+          <p>
+            You scored <strong>{scoreResults}</strong> out of{" "}
+            <strong>{numberOfQuestions}</strong> correct
+          </p>
         </div>
-      ) : null}
+      ) : (
+        // Accessible heading placeholder before submission
+        <h2 id={headingId} className="sr-only">
+          Ready to submit
+        </h2>
+      )}
 
-      {/* Primary action button */}
-      <button onClick={onButtonClick}>{isSubmitted()}</button>
+      {/* Main action button */}
+      <button type="button" onClick={onButtonClick}>
+        {buttonLabel}
+      </button>
     </section>
   );
-}
+});
+
+export default ResultsSection;
