@@ -1,42 +1,33 @@
-// ===============================
-// QuizPage.jsx — builds API URL from router state (difficulty/category)
-// ===============================
+// QuizPage.jsx
+// Renders a quiz based on OpenTDB settings from router state.
 
-// Global styles for the app
-import "../css/app.css";
-import "../css/quiz-page.css";
+import React from "react";
+import { decode } from "html-entities";
+import { useLocation } from "react-router-dom";
+import Confetti from "react-confetti";
 
-// App components
-import QuestionCard from "../components/QuestionCard";
-import ResultsSection from "../components/ResultsSection";
+// Components (put all imports here together, even lazy ones)
 import Nav from "../components/Nav";
-
-// Static asset for decorative background
-import DarkPurpleBackgroundEllipse from "../images/background-dark-purple-ellipse.svg";
+import ResultsSection from "../components/ResultsSection";
 
 // Hooks
 import { useWindowSize } from "../hooks/UseWindowSize";
-import { useLocation } from "react-router-dom"; // <-- read filters passed from Home
 
-// React and helpers
-import React from "react";
-import { decode } from "html-entities";
+// Styles & assets
+import "../css/app.css";
+import "../css/quiz-page.css";
+import DarkPurpleBackgroundEllipse from "../images/background-dark-purple-ellipse.svg";
+const QuestionCard = React.lazy(() => import("../components/QuestionCard"));
 
-// Celebration effect after submission
-import Confetti from "react-confetti";
-
-// Utility: shallow shuffle for answer options
+// Helpers
 const shuffleOptions = (array) => {
   return [...array].sort(() => Math.random() - 0.5);
 };
 
-// ===============================
-// Component
-// ===============================
-
 export default function QuizPage() {
+  const resultsRef = React.useRef(null);
 
-  // Read window size for the confetti canvas
+  // Confetti sizing
   const { width, height } = useWindowSize();
 
   // Read filters (difficulty, category) from router state
@@ -52,7 +43,7 @@ export default function QuizPage() {
   // Quiz questions: [{ question, options[], correct_answer }]
   const [quizData, setQuizData] = React.useState([]);
 
-  // Has the user submitted answers yet?
+  // Track submission state
   const [submitted, setSubmitted] = React.useState(false);
 
   // Number of correct answers after submission
@@ -85,7 +76,9 @@ export default function QuizPage() {
         setAnswers(Array(mapped.length).fill(null));
       })
       .catch((err) => console.error(err));
-  }, [API_URL]); // re-fetch if filters (hence URL) change
+
+  // Re-fetch if filters (hence URL) change
+  }, [API_URL]); 
 
   // Kick off fetch on mount (and when filters change)
   React.useEffect(() => {
@@ -95,57 +88,71 @@ export default function QuizPage() {
   // Handle the primary action button (Submit / Play again)
   const submitButtonClicked = () => {
     if (!submitted) {
-      // When submitting, compute score from current selections
+      // Submitting answers: calculate score
       const total = answers.reduce((sum, selectedIdx, i) => {
-        if (selectedIdx == null) return sum; // unanswered
+        if (selectedIdx == null) return sum;
         const q = quizData[i];
         return sum + (q.options[selectedIdx] === q.correct_answer ? 1 : 0);
       }, 0);
 
       setScore(total);
       setSubmitted(true);
+
+      // Move focus to the results section
+      setTimeout(() => {
+        resultsRef.current?.focus();
+      }, 0);
     } else {
-      // Restart game: clear state and fetch a fresh quiz
+
+      // Play again: reset state and fetch a fresh quiz
       setSubmitted(false);
       setScore(0);
-      setAnswers([]); // clear immediately before new data arrives
+      setAnswers([]);
       fetchQuizData();
+
+      // Scroll back to the top of the page
+      setTimeout(() => {
+        document.getElementById("page-top")?.scrollIntoView({ behavior: "smooth" });
+      }, 100);
     }
   };
 
   return (
     <>
-
+    
       {/* Top navigation (logo/back) */}
       <Nav />
 
       {/* Main quiz area */}
-      <main className="quiz">
+      <main id="page-top" className="quiz">
+        <React.Suspense fallback={<h2>Loading questions...</h2>}>
 
-        {/* Render each question card with its options */}
-        {quizData.map((question, id) => (
-          <QuestionCard
-            key={id}
-            number={id + 1}
-            question={question.question}
-            options={question.options}
-            correct_answer={question.correct_answer}
-            submitted={submitted}
-            selectedIndex={answers[id]}
-            onSelect={(i) =>
-              setAnswers((prev) => {
-                const next = [...prev];
+          {/* Render each question card with its options */}
+          {quizData.map((question, id) => (
+            <QuestionCard
+              key={id}
+              number={id + 1}
+              question={question.question}
+              options={question.options}
+              correct_answer={question.correct_answer}
+              submitted={submitted}
+              selectedIndex={answers[id]}
+              onSelect={(i) =>
+                setAnswers((prev) => {
+                  const next = [...prev];
 
-                // store selected option index for this question
-                next[id] = i; 
-                return next;
-              })
-            }
-          />
-        ))}
+                  // Store selected option index for this question
+                  next[id] = i;
+                  return next;
+                })
+              }
+            />
+          ))}
+        </React.Suspense>
 
         {/* Results block and primary action button */}
         <ResultsSection
+          ref={resultsRef}
           onButtonClick={submitButtonClicked}
           submitted={submitted}
           scoreResults={score}

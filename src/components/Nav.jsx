@@ -11,9 +11,10 @@ import {Link } from "react-router-dom";
 export default function Nav() {
 
     return (
+        
         // The <header> element wraps the top section of the page
         // Note: In React, you should use "className" instead of "class"
-        <nav class="nav">
+        <nav class="nav" id="page-top">
             
             {/* Render the back button arrow image */}
             <Link to="/">
