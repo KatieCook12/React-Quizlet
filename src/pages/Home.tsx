@@ -1,56 +1,34 @@
-// ===============================
-// Home.jsx — with form submit -> read values -> navigate to /quiz
-// ===============================
-
-// Global styles
 import "../css/app.css";
 import "../css/home-page.css";
-
-// Assets
 import QuizletWhiteLogo from "../images/quizlet-logo-white.svg";
 import DarkPurpleBackgroundEllipse from "../images/background-dark-purple-ellipse.svg";
-
-// Router / React
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function Home() {
+export default function Home(): React.JSX.Element {
   const navigate = useNavigate();
 
-  // Handle form submit: read FormData and navigate to /quiz with filters in state
-  function handleStart(e) {
+  function handleStart(e: React.FormEvent<HTMLFormElement>): void {
     e.preventDefault();
 
     const form = e.currentTarget;
-
-    // gather all fields
     const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries()) as Record<string, string>;
 
-    // Convert FormData entries to a plain object: { difficulty, category }
-    const data = Object.fromEntries(formData.entries());
-
-    // Navigate to quiz and pass filters via router state
     navigate("/quiz", { state: { filters: data } });
   }
 
   return (
     <>
-      {/* Main hero section */}
       <main className="home-page">
-
-        {/* Brand logo */}
         <img
           className="logo"
           src={QuizletWhiteLogo}
           alt="White Quizlet logo with rocket"
         />
 
-        {/* Start form */}
         <form onSubmit={handleStart}>
-
         <div className="drop-down-selections">
-
-          {/* Difficulty selector */}
           <div className="drop-down">
             <label htmlFor="difficulty">Select difficulty</label>
             <select className="select" id="difficulty" name="difficulty" defaultValue="easy">
@@ -63,7 +41,6 @@ export default function Home() {
             </select>
           </div>
 
-          {/* Category selector */}
           <div className="drop-down">
             <label htmlFor="category">Select category</label>
             <select className="select" id="category" name="category" defaultValue="9">
@@ -79,15 +56,12 @@ export default function Home() {
               <option value="27">Animals</option>
             </select>
           </div>
-
           </div>
 
-          {/* Submit to start the quiz with chosen filters */}
           <button type="submit">Start quiz</button>
         </form>
       </main>
 
-      {/* Background ellipse (fixed, behind content) */}
       <img
         src={DarkPurpleBackgroundEllipse}
         alt="Dark purple background ellipse"

@@ -1,5 +1,14 @@
 import Button from "./Button";
-import React from "react";
+
+type QuestionCardProps = {
+  number: number;
+  question: string;
+  options: string[];
+  correct_answer: string;
+  submitted: boolean;
+  selectedIndex: number | null;
+  onSelect: (index: number) => void;
+};
 
 export default function QuestionCard({
   number,
@@ -9,21 +18,13 @@ export default function QuestionCard({
   submitted,
   selectedIndex,
   onSelect,
-}) {
-  // Handle answer selection
-  const handleClick = (index) => {
-
-    // Prevent changes after submission
+}: QuestionCardProps): React.JSX.Element {
+  const handleClick = (index: number): void => {
     if (submitted) return;
-
-    // Call parent function with selected option index
-    onSelect(index);             
+    onSelect(index);
   };
 
-  // Check if an answer was selected
   const isAnswered = selectedIndex !== null && selectedIndex !== undefined;
-
-  // Score for this question (1 if correct, otherwise 0)
   const score = isAnswered && options[selectedIndex] === correct_answer ? 1 : 0;
 
   return (
@@ -35,21 +36,11 @@ export default function QuestionCard({
 
         <div className="options">
           {options.map((option, i) => {
-
-            // Check if option is selected
             const isSelected = selectedIndex === i;
-            
-            // Check if option is correct
             const isCorrectOption = option === correct_answer;
-            
-            // Highlight correct option
             const showAsCorrect = submitted && isCorrectOption;
-            
-            // Highlight wrong option
             const showAsWrong = submitted && isSelected && !isCorrectOption;
-
-            // Disable others after submission
-            const showASDisabled = submitted && !isSelected && !isCorrectOption; 
+            const showASDisabled = submitted && !isSelected && !isCorrectOption;
 
             return (
               <Button
@@ -66,7 +57,6 @@ export default function QuestionCard({
         </div>
       </div>
 
-      {/* Show result text only after submission */}
       {submitted ? <h4>{score === 1 ? "Correct" : "Incorrect"}</h4> : " "}
     </div>
   );

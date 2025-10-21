@@ -1,12 +1,15 @@
-// Import React to create the component
-import React from "react";
-
-// Import clsx for conditional classNames
 import clsx from "clsx";
-
-// Import icons for correct and wrong states
 import RedCircleWhiteCross from "../images/red-circle-white-cross.svg";
 import GreenCircleWhiteTick from "../images/green-circle-white-tick.svg";
+
+type ButtonProps = {
+  option: string;
+  isSelected: boolean;
+  onClick: () => void;
+  showAsCorrect: boolean;
+  showAsWrong: boolean;
+  showASDisabled: boolean;
+};
 
 export default function Button({
   option,
@@ -15,9 +18,7 @@ export default function Button({
   showAsCorrect,
   showAsWrong,
   showASDisabled
-}) {
-  
-  // Apply button classes based on the props
+}: ButtonProps): React.JSX.Element {
   const className = clsx(
     "answer-button",
     isSelected && "clicked",
@@ -25,7 +26,6 @@ export default function Button({
     showAsWrong && "wrong"
   );
 
-  // Pick the correct icon based on state
   const icon = showAsCorrect && isSelected
     ? GreenCircleWhiteTick
     : showAsWrong
@@ -36,7 +36,7 @@ export default function Button({
     <button
       className={className}
       onClick={onClick}
-      disabled={showASDisabled ? true : false}
+      disabled={showASDisabled}
     >
       {icon && <img src={icon} alt="icon" />}
       {option}
