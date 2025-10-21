@@ -101,14 +101,9 @@ export default function QuizPage(): React.JSX.Element {
         {!submitted && (
           <div style={{
             position: "sticky",
-            top: "72px",
+            top: "40px",
             zIndex: 99,
             width: "100%",
-            background: "#430D97",
-            padding: "0 64px",
-            marginLeft: "-64px",
-            marginRight: "-64px",
-            paddingTop: "16px",
           }}>
             <ProgressBar answeredCount={answeredCount} totalQuestions={quizData.length} />
           </div>
