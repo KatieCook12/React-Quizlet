@@ -164,9 +164,9 @@ nav {
   align-items: center;
   align-self: stretch;
   width: 100%;
-  gap: var(--space-4);
-  padding-bottom: var(--space-4);
-  background: linear-gradient(180deg, var(--clr-purple-600) 0%, var(--clr-purple-700) 100%);
+  gap: var(--space-8);
+  padding-bottom: 0;
+  background: var(--clr-purple-900);
 }
 
 nav .nav-content {
