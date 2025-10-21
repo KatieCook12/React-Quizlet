@@ -17,7 +17,7 @@ export default function ProgressBar({ answeredCount, totalQuestions }: ProgressB
         flexShrink: 0,
         width: "100%",
         borderRadius: "100px",
-        background: "#430D97",
+        background: "#FFF",
         position: "relative",
         marginBottom: "24px",
         overflow: "hidden",
