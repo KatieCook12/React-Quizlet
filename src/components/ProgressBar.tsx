@@ -3,8 +3,18 @@ type ProgressBarProps = {
   totalQuestions: number;
 };
 
+<<<<<<< HEAD
 export default function ProgressBar({ answeredCount, totalQuestions }: ProgressBarProps): React.JSX.Element {
   const progressPercentage = totalQuestions > 0 ? (answeredCount / totalQuestions) * 100 : 0;
+=======
+// ProgressBar component: displays quiz progress visually and accessibly
+export default function ProgressBar({
+  answeredCount,
+  totalQuestions,
+}: ProgressBarProps): React.JSX.Element {
+  const progressPercentage =
+    totalQuestions > 0 ? (answeredCount / totalQuestions) * 100 : 0;
+>>>>>>> 32b3d63 (Loading progress bar)
 
   return (
     <div
@@ -13,6 +23,7 @@ export default function ProgressBar({ answeredCount, totalQuestions }: ProgressB
       aria-valuemin={0}
       aria-valuemax={totalQuestions}
       aria-label={`Quiz progress: ${answeredCount} of ${totalQuestions} questions answered`}
+<<<<<<< HEAD
       style={{
         display: "flex",
         height: "32px",
@@ -66,6 +77,18 @@ export default function ProgressBar({ answeredCount, totalQuestions }: ProgressB
         >
           {answeredCount}/{totalQuestions}
         </span>
+=======
+      className="progress"
+
+      style={{ ["--progress" as any]: `${progressPercentage}%` }}
+    >
+      {/* Fill bar (visual only) */}
+      <div aria-hidden="true" className="progress__fill" />
+
+      {/* Numeric label (visual only; ARIA handles semantics) */}
+      <div aria-hidden="true" className="progress__label">
+        {answeredCount}/{totalQuestions}
+>>>>>>> 32b3d63 (Loading progress bar)
       </div>
     </div>
   );

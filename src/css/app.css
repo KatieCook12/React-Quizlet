@@ -39,6 +39,12 @@
   --space-16: 64px;
 
   --shadow-btn: 4px 4px 0 0 var(--clr-green-700);
+<<<<<<< HEAD
+=======
+
+  /* Layout vars */
+  --nav-offset: 132px; /* default content offset under fixed header (logo + progress) */
+>>>>>>> 32b3d63 (Loading progress bar)
 }
 
 /* =========================================================
@@ -57,8 +63,12 @@ h1, h2, h3, h4, p { margin: 0; }
 
 button { font-family: var(--ff-sans); }
 
+<<<<<<< HEAD
 /* Links */
  a { text-decoration: none; }
+=======
+a { text-decoration: none; color: inherit; }
+>>>>>>> 32b3d63 (Loading progress bar)
 
 /* =========================================================
    App shell
@@ -71,8 +81,19 @@ button { font-family: var(--ff-sans); }
   padding: var(--space-16);
   flex-direction: column;
   align-items: center;
+<<<<<<< HEAD
   gap: var(--space-16);
   background: linear-gradient(180deg, var(--clr-purple-600) 0%, var(--clr-purple-700) 100%), #FEFEFE;
+=======
+  gap: var(--space-8);
+  background:
+    linear-gradient(180deg, var(--clr-purple-600) 0%, var(--clr-purple-700) 100%),
+    #FEFEFE;
+}
+
+@media (max-width: 412px) {
+  #root { padding: var(--space-8); }
+>>>>>>> 32b3d63 (Loading progress bar)
 }
 
 /* Decorative background ellipse — fills page width (no 100vw/scrollbar mismatch) */
@@ -121,6 +142,23 @@ p {
   text-align: center;
 }
 
+<<<<<<< HEAD
+=======
+/* Screen-reader-only utility */
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 1px, 0) !important;
+  clip-path: inset(50%) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+>>>>>>> 32b3d63 (Loading progress bar)
 /* =========================================================
    Buttons (shared)
    ========================================================= */
@@ -141,6 +179,7 @@ button {
   box-shadow: var(--shadow-btn);
 }
 
+<<<<<<< HEAD
 @media (prefers-reduced-motion: reduce) {
   button {
     transition: none;
@@ -159,6 +198,8 @@ button {
   }
 }
 
+=======
+>>>>>>> 32b3d63 (Loading progress bar)
 button:hover { background: #B0C7BB; }
 
 button:focus-visible {
@@ -173,6 +214,7 @@ button:disabled {
   cursor: not-allowed;
 }
 
+<<<<<<< HEAD
 /* =========================================================
    Nav
    ========================================================= */
@@ -198,10 +240,66 @@ nav .back-button {
 }
 
 nav a{
+=======
+/* Motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  button { transition: none; }
+  .progress__fill { transition: none; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  button { transition: background-color .2s ease, color .2s ease; }
+  .progress__fill { transition: width 0.3s ease; }
+}
+
+/* =========================================================
+   Fixed Header (Nav) with embedded ProgressBar
+   ========================================================= */
+.nav {
+  position: sticky;
+  width: 100%;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  background: var(--clr-purple-900);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  transition: padding-bottom .25s ease, box-shadow .25s ease;
+}
+
+.nav--scrolled {
+  padding-bottom: var(--space-6);                 /* add breathing space on scroll */
+  box-shadow: 0 2px 4px rgba(0,0,0,.15);
+}
+
+.nav__inner {
+  margin: 0 auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;                         /* logo then progress */
+  align-items: center;
+  width: 100%;
+  gap: var(--space-4);
+}
+
+.nav__logo,
+.nav a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav__back {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  translate: 0 -50%;
+>>>>>>> 32b3d63 (Loading progress bar)
   display: flex;
   align-items: center;
 }
 
+<<<<<<< HEAD
 /* When the screen size width is maximum 430px */
 @media (max-width: 430px) {
   nav .logo {
@@ -215,6 +313,62 @@ nav a{
 
 /* =========================================================
    Form / dropdowns
+=======
+.nav .logo { width: 187px; height: 40px; }
+.nav .back-button { width: 24px; height: 18px; cursor: pointer; }
+
+.nav__progress { width: 100%; }
+
+/* Mobile tweaks */
+@media (max-width: 430px) {
+  .nav .back-button { height: 15px; }
+}
+
+/* =========================================================
+   Progress Bar
+   ========================================================= */
+.progress {
+  --progress: 0%;
+  display: flex;
+  height: 32px;
+  padding: 4px 12px 4px 4px;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  border-radius: var(--radius-pill);
+  background: var(--clr-white);
+  position: relative;
+  overflow: hidden;
+  margin-bottom: var(--space-2);
+}
+
+.progress__fill {
+  position: relative;                 /* absolute so it fills behind the label */
+  inset: 0 auto 0 0;
+  width: var(--progress);
+  height: 100%;
+  background: var(--clr-green-700);
+  border-radius: var(--radius-pill) 0 0 var(--radius-pill);
+}
+
+.progress__label {
+  position: relative;
+  z-index: 1;
+  margin-left: auto;
+  color: var(--clr-gray-700);
+  text-align: center;
+  font-family: var(--ff-sans);
+  font-size: 15px;
+  font-weight: var(--fw-semi);
+  line-height: normal;
+}
+
+/* When the ProgressBar is inside the header, remove any outside spacing if needed */
+.nav .progress { margin-bottom: 0; }
+
+/* =========================================================
+   Forms / dropdowns
+>>>>>>> 32b3d63 (Loading progress bar)
    ========================================================= */
 label {
   color: var(--clr-white);
@@ -293,6 +447,7 @@ form button { width: fit-content; }
 }
 
 /* Menu items inside the opened native dropdown */
+<<<<<<< HEAD
 option { color: var(--clr-black); }
 
 /* Screen-reader-only utility */
@@ -309,3 +464,6 @@ option { color: var(--clr-black); }
   border: 0 !important;
 }
 
+=======
+option { color: var(--clr-black); } 
+>>>>>>> 32b3d63 (Loading progress bar)
