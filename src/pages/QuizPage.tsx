@@ -114,9 +114,7 @@ export default function QuizPage() {
       fetchQuizData();
 
       // Scroll back to the top of the page
-      setTimeout(() => {
-        document.getElementById("page-top")?.scrollIntoView({ behavior: "smooth" });
-      }, 100);
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
 
@@ -170,8 +168,8 @@ export default function QuizPage() {
           numberOfQuestions={quizData.length}
         />
 
-        {/* Confetti celebration only after submission */}
-        {submitted ? (
+        {/* Confetti celebration only after submission and if score > 0 */}
+        {submitted && score > 0 ? (
           <Confetti
             width={width}
             height={height}
