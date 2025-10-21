@@ -74,16 +74,19 @@
 
 @media (prefers-reduced-motion: no-preference) {
   .answer-button {
-    transition: background-color .2s ease, color .2s ease, border-color .2s ease;
+    transition: background-color 0.2s ease, color 0.2s ease,
+      border-color 0.2s ease;
   }
 }
 
 /* Hover (when selectable) */
-.answer-button:hover { background: var(--clr-purple-100); }
+.answer-button:hover {
+  background: var(--clr-purple-100);
+}
 
 /* Focus visible for keyboard navigation */
 .answer-button:focus-visible {
-  outline: 3px solid #FFBF47;
+  outline: 3px solid #ffbf47;
   outline-offset: 2px;
 }
 
@@ -94,9 +97,13 @@
 }
 
 /* Hide state icon by default; show when marked */
-.answer-button img { display: none; }
+.answer-button img {
+  display: none;
+}
 .answer-button.correct img,
-.answer-button.wrong img { display: block; }
+.answer-button.wrong img {
+  display: block;
+}
 
 /* Marking states (post-submit) */
 .answer-button.correct {
