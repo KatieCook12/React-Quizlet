@@ -4,16 +4,9 @@
 import React from "react";
 import { highScorePhrases, lowScorePhrases, midScorePhrases } from "../phrases";
 
-interface ResultsSectionProps {
-  onButtonClick: () => void;
-  submitted: boolean;
-  scoreResults: number;
-  numberOfQuestions: number;
-}
-
-const ResultsSection = React.forwardRef<HTMLElement, ResultsSectionProps>(function ResultsSection(
-  { onButtonClick, submitted, scoreResults, numberOfQuestions }: ResultsSectionProps,
-  ref: React.Ref<HTMLElement>
+const ResultsSection = React.forwardRef(function ResultsSection(
+  { onButtonClick, submitted, scoreResults, numberOfQuestions },
+  ref
 ) {
   const headingId = React.useId();
   const regionId = React.useId();

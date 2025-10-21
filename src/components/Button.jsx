@@ -8,15 +8,6 @@ import clsx from "clsx";
 import RedCircleWhiteCross from "../images/red-circle-white-cross.svg";
 import GreenCircleWhiteTick from "../images/green-circle-white-tick.svg";
 
-interface ButtonProps {
-  option: string;
-  isSelected: boolean;
-  onClick: () => void;
-  showAsCorrect: boolean;
-  showAsWrong: boolean;
-  showASDisabled: boolean;
-}
-
 export default function Button({
   option,
   isSelected,
@@ -24,7 +15,7 @@ export default function Button({
   showAsCorrect,
   showAsWrong,
   showASDisabled
-}: ButtonProps) {
+}) {
   
   // Apply button classes based on the props
   const className = clsx(
@@ -41,23 +32,14 @@ export default function Button({
     ? RedCircleWhiteCross
     : null;
 
-  // Determine aria-label for accessibility
-  const ariaLabel = showAsCorrect
-    ? `${option} - Correct answer`
-    : showAsWrong
-    ? `${option} - Incorrect answer`
-    : option;
-
   return (
     <button
       className={className}
       onClick={onClick}
-      disabled={showASDisabled}
-      aria-pressed={isSelected}
-      aria-label={ariaLabel}
+      disabled={showASDisabled ? true : false}
     >
-      {icon && <img src={icon} alt="" aria-hidden="true" />}
-      <span>{option}</span>
+      {icon && <img src={icon} alt="icon" />}
+      {option}
     </button>
   );
 }

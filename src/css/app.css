@@ -13,7 +13,6 @@
   --clr-purple-100: #E4D9F5;
 
   --clr-green-700: #2B8053;
-  --clr-green-600: #2B7F53;
   --clr-green-100: #D2EDDF;
 
   --clr-red-700: #900032;
@@ -156,24 +155,12 @@ button:disabled {
    Nav
    ========================================================= */
 nav {
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  align-self: stretch;
-  width: 100%;
-  gap: var(--space-8);
-  padding-bottom: 0;
-  background: var(--clr-purple-900);
-}
-
-nav .nav-content {
   position: relative;
+  z-index: 1; /* above background decoration */
   display: flex;
   justify-content: center;
   align-items: center;
+  align-self: stretch;
   width: 100%;
 }
 
@@ -190,48 +177,6 @@ nav .back-button {
 nav a{
   display: flex;
   align-items: center;
-}
-
-/* Progress bar container */
-.progress-bar-container {
-  display: flex;
-  height: 32px;
-  padding: 4px 12px 4px 4px;
-  align-items: center;
-  gap: var(--space-3);
-  flex-shrink: 0;
-  align-self: stretch;
-  border-radius: 100px;
-  background: var(--clr-white);
-  width: 100%;
-}
-
-.progress-bar {
-  flex: 1 0 0;
-  height: 100%;
-  display: flex;
-  align-items: stretch;
-  border-radius: 100px 0 0 100px;
-  overflow: hidden;
-  position: relative;
-}
-
-.progress-bar-fill {
-  height: 100%;
-  background: var(--clr-green-600);
-  border-radius: 100px 0 0 100px;
-  transition: width 0.3s ease;
-}
-
-.progress-text {
-  color: var(--clr-gray-700);
-  text-align: center;
-  font-family: var(--ff-sans);
-  font-size: 15px;
-  font-style: normal;
-  font-weight: var(--fw-semi);
-  line-height: normal;
-  white-space: nowrap;
 }
 
 /* When the screen size width is maximum 430px */
@@ -338,59 +283,5 @@ option { color: var(--clr-black); }
   clip-path: inset(50%) !important;
   white-space: nowrap !important;
   border: 0 !important;
-}
-
-/* =========================================================
-   Accessibility improvements
-   ========================================================= */
-
-/* Skip link for keyboard navigation */
-.skip-link {
-  position: absolute;
-  left: -10000px;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-}
-
-.skip-link:focus {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: auto;
-  height: auto;
-  overflow: visible;
-  clip: auto;
-  white-space: normal;
-  background: var(--clr-green-100);
-  color: var(--clr-black);
-  padding: 12px 24px;
-  text-decoration: none;
-  font-weight: var(--fw-bold);
-  z-index: 100;
-  border-radius: 0 0 var(--radius-pill) 0;
-}
-
-/* Enhanced focus styles for keyboard navigation */
-a:focus-visible,
-button:focus-visible,
-select:focus-visible {
-  outline: 3px solid var(--clr-green-100);
-  outline-offset: 2px;
-}
-
-/* Focus visible for answer buttons */
-.answer-button:focus-visible {
-  outline: 3px solid var(--clr-green-100);
-  outline-offset: 2px;
-}
-
-/* Remove default focus outline, rely on focus-visible */
-a:focus:not(:focus-visible),
-button:focus:not(:focus-visible),
-select:focus:not(:focus-visible) {
-  outline: none;
 }
 

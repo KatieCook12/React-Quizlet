@@ -13,9 +13,6 @@ import ResultsSection from "../components/ResultsSection";
 // Hooks
 import { useWindowSize } from "../hooks/UseWindowSize";
 
-// Types
-import { QuizQuestion, QuizFilters, OpenTDBResponse } from "../types";
-
 // Styles & assets
 import "../css/app.css";
 import "../css/quiz-page.css";
@@ -23,19 +20,19 @@ import DarkPurpleBackgroundEllipse from "../images/background-dark-purple-ellips
 const QuestionCard = React.lazy(() => import("../components/QuestionCard"));
 
 // Helpers
-const shuffleOptions = (array: string[]): string[] => {
+const shuffleOptions = (array) => {
   return [...array].sort(() => Math.random() - 0.5);
 };
 
 export default function QuizPage() {
-  const resultsRef = React.useRef<HTMLElement>(null);
+  const resultsRef = React.useRef(null);
 
   // Confetti sizing
   const { width, height } = useWindowSize();
 
   // Read filters (difficulty, category) from router state
   const { state } = useLocation();
-  const filters: QuizFilters = (state as { filters?: QuizFilters })?.filters || {};
+  const filters = state?.filters || {}; // { difficulty, category }
 
   // Build OpenTDB URL with chosen filters
   const params = new URLSearchParams({ amount: "5", type: "multiple" });
@@ -44,7 +41,7 @@ export default function QuizPage() {
   const API_URL = `https://opentdb.com/api.php?${params.toString()}`;
 
   // Quiz questions: [{ question, options[], correct_answer }]
-  const [quizData, setQuizData] = React.useState<QuizQuestion[]>([]);
+  const [quizData, setQuizData] = React.useState([]);
 
   // Track submission state
   const [submitted, setSubmitted] = React.useState(false);
@@ -53,22 +50,22 @@ export default function QuizPage() {
   const [score, setScore] = React.useState(0);
 
   // Selected option index per question (null when unanswered)
-  const [answers, setAnswers] = React.useState<(number | null)[]>([]);
+  const [answers, setAnswers] = React.useState([]);
 
   // Fetch quiz data from API and normalize it for rendering
   const fetchQuizData = React.useCallback(() => {
     fetch(API_URL)
       .then((res) => res.json())
-      .then((data: OpenTDBResponse) => {
+      .then((data) => {
         if (!data.results) return;
 
         // Map API items into a shape convenient for rendering/marking
-        const mapped: QuizQuestion[] = data.results.map((item) => ({
+        const mapped = data.results.map((item) => ({
           question: decode(item.question),
           options: shuffleOptions([
             ...item.incorrect_answers,
             item.correct_answer,
-          ]).map((opt) => decode(opt)),
+          ]).map(decode),
           correct_answer: decode(item.correct_answer),
         }));
 
@@ -92,7 +89,7 @@ export default function QuizPage() {
   const submitButtonClicked = () => {
     if (!submitted) {
       // Submitting answers: calculate score
-      const total = answers.reduce<number>((sum: number, selectedIdx: number | null, i: number) => {
+      const total = answers.reduce((sum, selectedIdx, i) => {
         if (selectedIdx == null) return sum;
         const q = quizData[i];
         return sum + (q.options[selectedIdx] === q.correct_answer ? 1 : 0);
@@ -114,30 +111,24 @@ export default function QuizPage() {
       fetchQuizData();
 
       // Scroll back to the top of the page
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      setTimeout(() => {
+        document.getElementById("page-top")?.scrollIntoView({ behavior: "smooth" });
+      }, 100);
     }
   };
 
-  // Count how many questions have been answered
-  const answeredCount = answers.filter((a) => a !== null).length;
-
   return (
     <>
-
-      {/* Top navigation (logo/back) with progress bar */}
-      <Nav
-        showProgress={!submitted}
-        answered={answeredCount}
-        total={quizData.length}
-      />
+    
+      {/* Top navigation (logo/back) */}
+      <Nav />
 
       {/* Main quiz area */}
-      <main id="main-content" className="quiz" aria-label="Quiz questions">
-        <h1 className="sr-only">Quiz Questions</h1>
+      <main id="page-top" className="quiz">
         <React.Suspense fallback={<h2>Loading questions...</h2>}>
 
           {/* Render each question card with its options */}
-          {quizData.map((question: QuizQuestion, id: number) => (
+          {quizData.map((question, id) => (
             <QuestionCard
               key={id}
               number={id + 1}
@@ -146,8 +137,8 @@ export default function QuizPage() {
               correct_answer={question.correct_answer}
               submitted={submitted}
               selectedIndex={answers[id]}
-              onSelect={(i: number) =>
-                setAnswers((prev: (number | null)[]) => {
+              onSelect={(i) =>
+                setAnswers((prev) => {
                   const next = [...prev];
 
                   // Store selected option index for this question
@@ -168,13 +159,12 @@ export default function QuizPage() {
           numberOfQuestions={quizData.length}
         />
 
-        {/* Confetti celebration only after submission and if score > 0 */}
-        {submitted && score > 0 ? (
+        {/* Confetti celebration only after submission */}
+        {submitted ? (
           <Confetti
             width={width}
             height={height}
             style={{ position: "fixed", inset: 0, pointerEvents: "none" }}
-            aria-hidden="true"
           />
         ) : null}
       </main>
@@ -182,9 +172,8 @@ export default function QuizPage() {
       {/* Decorative background ellipse (fixed, behind content) */}
       <img
         src={DarkPurpleBackgroundEllipse}
-        alt=""
+        alt="Dark purple background ellipse"
         className="dark-purple-background-ellipse"
-        aria-hidden="true"
       />
     </>
   );

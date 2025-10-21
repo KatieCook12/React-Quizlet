@@ -1,16 +1,6 @@
 import Button from "./Button";
 import React from "react";
 
-interface QuestionCardProps {
-  number: number;
-  question: string;
-  options?: string[];
-  correct_answer: string;
-  submitted: boolean;
-  selectedIndex: number | null;
-  onSelect: (index: number) => void;
-}
-
 export default function QuestionCard({
   number,
   question,
@@ -19,15 +9,15 @@ export default function QuestionCard({
   submitted,
   selectedIndex,
   onSelect,
-}: QuestionCardProps) {
+}) {
   // Handle answer selection
-  const handleClick = (index: number) => {
+  const handleClick = (index) => {
 
     // Prevent changes after submission
     if (submitted) return;
 
     // Call parent function with selected option index
-    onSelect(index);
+    onSelect(index);             
   };
 
   // Check if an answer was selected
@@ -37,13 +27,13 @@ export default function QuestionCard({
   const score = isAnswered && options[selectedIndex] === correct_answer ? 1 : 0;
 
   return (
-    <article className="question-card" aria-labelledby={`question-${number}`}>
+    <div className="question-card">
       <h3>{`Question ${number} of 5`}</h3>
 
       <div className="question-and-options">
-        <h2 id={`question-${number}`}>{question}</h2>
+        <h2>{question}</h2>
 
-        <div className="options" role="group" aria-label="Answer choices">
+        <div className="options">
           {options.map((option, i) => {
 
             // Check if option is selected
@@ -77,11 +67,7 @@ export default function QuestionCard({
       </div>
 
       {/* Show result text only after submission */}
-      {submitted && (
-        <h4 role="status" aria-live="polite">
-          {score === 1 ? "Correct" : "Incorrect"}
-        </h4>
-      )}
-    </article>
+      {submitted ? <h4>{score === 1 ? "Correct" : "Incorrect"}</h4> : " "}
+    </div>
   );
 }
