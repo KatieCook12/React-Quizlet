@@ -97,9 +97,9 @@ export default function QuizPage(): React.JSX.Element {
     <>
       <Nav />
 
-      {!submitted && <ProgressBar answeredCount={answeredCount} totalQuestions={quizData.length} />}
-
       <main id="page-top" className="quiz">
+        {!submitted && <ProgressBar answeredCount={answeredCount} totalQuestions={quizData.length} />}
+
         <React.Suspense fallback={<h2>Loading questions...</h2>}>
           {quizData.map((question, id) => (
             <QuestionCard

@@ -15,20 +15,22 @@ export default function ProgressBar({ answeredCount, totalQuestions }: ProgressB
         alignItems: "center",
         gap: "12px",
         flexShrink: 0,
-        alignSelf: "stretch",
+        width: "100%",
         borderRadius: "100px",
         background: "#FFF",
         position: "relative",
-        margin: "16px 0",
+        marginBottom: "24px",
+        overflow: "hidden",
       }}
     >
       <div
         style={{
-          flex: "1 0 0",
-          alignSelf: "stretch",
+          height: "100%",
           borderRadius: "100px 0 0 100px",
           background: "#2B7F53",
-          position: "relative",
+          position: "absolute",
+          left: 0,
+          top: 0,
           width: `${progressPercentage}%`,
           transition: "width 0.3s ease",
         }}
@@ -43,6 +45,8 @@ export default function ProgressBar({ answeredCount, totalQuestions }: ProgressB
           fontWeight: 600,
           lineHeight: "normal",
           position: "relative",
+          zIndex: 1,
+          marginLeft: "auto",
         }}
       >
         <span
