@@ -84,6 +84,10 @@ export default function QuizPage(): React.JSX.Element {
       setScore(0);
       setAnswers([]);
       fetchQuizData();
+
+      setTimeout(() => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }, 100);
     }
   };
 
