@@ -119,17 +119,35 @@ npm test
 * **Routing:** Splitting flows into pages and passing state via navigation&#x20;
 * **Component Design:** Breaking the UI into small, reusable components
 * **Conditional Rendering:** Dynamic button states, correct/wrong answers, and results
-* **Accessibility & UX:** Focus management, live announcements, and smooth scrolling
+* **Accessibility & UX:** Focus management, live announcements, smooth scrolling, ARIA attributes, and semantic HTML
+* **Inclusive Design:** Supporting keyboard navigation, screen readers, and motion preferences
 
 
 ---
+
+## ♿ Accessibility Features
+
+This quiz app is fully accessible and meets **WCAG 2.2 AA** standards:
+
+* **Semantic HTML:** Uses `<section>`, `role="radiogroup"`, `role="progressbar"` for proper structure
+* **Screen Reader Support:**
+  - Progress bar announces "Quiz progress: X of 5 questions answered"
+  - Answer buttons announce context: "Option - Your answer - Correct/Incorrect"
+  - Feedback uses `aria-live="polite"` to announce results without disrupting focus
+  - Screen-reader-only text provides question context
+* **Keyboard Navigation:**
+  - All interactive elements accessible via Tab, Enter, and Space
+  - Clear focus indicators (3px yellow outline) on all focusable elements
+  - Automatic focus management: feedback receives focus after answer submission
+* **Color Contrast:** All text meets WCAG AA standards (4.5:1 ratio minimum)
+* **Non-color Indicators:** Checkmarks (✓) and crosses (✗) supplement color coding
+* **Motion Reduction:** Respects `prefers-reduced-motion` setting to disable animations
 
 ## 🧩 Areas for Improvement
 
 * Add more mobile-responsive refinements
 * Implement error states
 * Expand unit tests for all components
-* Improve accessibility (labels, focus styles, ARIA roles)
 * Persist scores to local storage or backend
 
 
