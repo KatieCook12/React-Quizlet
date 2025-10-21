@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
 import Confetti from "react-confetti";
 import Nav from "../components/Nav";
 import ResultsSection from "../components/ResultsSection";
+import ProgressBar from "../components/ProgressBar";
 import { useWindowSize } from "../hooks/UseWindowSize";
 import "../css/app.css";
 import "../css/quiz-page.css";
@@ -90,9 +91,13 @@ export default function QuizPage(): React.JSX.Element {
     }
   };
 
+  const answeredCount = answers.filter((answer) => answer !== null).length;
+
   return (
     <>
       <Nav />
+
+      {!submitted && <ProgressBar answeredCount={answeredCount} totalQuestions={quizData.length} />}
 
       <main id="page-top" className="quiz">
         <React.Suspense fallback={<h2>Loading questions...</h2>}>
