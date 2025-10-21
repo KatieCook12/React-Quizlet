@@ -139,10 +139,32 @@ button {
   line-height: 1;
   cursor: pointer;
   box-shadow: var(--shadow-btn);
-  transition: background-color .2s ease, color .2s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  button {
+    transition: none;
+  }
+  .progress-fill {
+    transition: none;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  button {
+    transition: background-color .2s ease, color .2s ease;
+  }
+  .progress-fill {
+    transition: width 0.3s ease;
+  }
 }
 
 button:hover { background: #B0C7BB; }
+
+button:focus-visible {
+  outline: 3px solid #FFBF47;
+  outline-offset: 2px;
+}
 
 button:disabled {
   border: 1.2px solid var(--clr-gray-700);
@@ -235,9 +257,10 @@ select {
 select::-ms-expand { display: none; }
 
 /* Focus ring + swap to 'up' arrow */
-select:focus {
+select:focus,
+select:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 3px var(--clr-purple-600);
+  box-shadow: 0 0 0 3px #FFBF47;
   background-image: url("../images/white-arrow-facing-up.svg");
 }
 

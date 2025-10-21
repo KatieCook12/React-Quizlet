@@ -1,3 +1,4 @@
+import React from "react";
 import Button from "./Button";
 
 type QuestionCardProps = {
@@ -19,6 +20,9 @@ export default function QuestionCard({
   selectedIndex,
   onSelect,
 }: QuestionCardProps): React.JSX.Element {
+  const questionId = React.useId();
+  const feedbackRef = React.useRef<HTMLDivElement>(null);
+
   const handleClick = (index: number): void => {
     if (submitted) return;
     onSelect(index);
@@ -27,14 +31,31 @@ export default function QuestionCard({
   const isAnswered = selectedIndex !== null && selectedIndex !== undefined;
   const score = isAnswered && options[selectedIndex] === correct_answer ? 1 : 0;
 
+  React.useEffect(() => {
+    if (submitted && feedbackRef.current) {
+      feedbackRef.current.focus();
+    }
+  }, [submitted]);
+
   return (
-    <div className="question-card">
-      <h3>{`Question ${number} of 5`}</h3>
+    <section
+      className="question-card"
+      aria-labelledby={questionId}
+    >
+      <h3 aria-hidden="true">{`Question ${number} of 5`}</h3>
 
       <div className="question-and-options">
-        <h2>{question}</h2>
+        <h2 id={questionId}>
+          <span className="sr-only">Question {number} of 5: </span>
+          {question}
+        </h2>
 
-        <div className="options">
+        <div
+          role="radiogroup"
+          aria-labelledby={questionId}
+          aria-required="true"
+          className="options"
+        >
           {options.map((option, i) => {
             const isSelected = selectedIndex === i;
             const isCorrectOption = option === correct_answer;
@@ -51,13 +72,39 @@ export default function QuestionCard({
                 showAsCorrect={showAsCorrect}
                 showAsWrong={showAsWrong}
                 showASDisabled={showASDisabled}
+                submitted={submitted}
+                isCorrectOption={isCorrectOption}
               />
             );
           })}
         </div>
       </div>
 
-      {submitted ? <h4>{score === 1 ? "Correct" : "Incorrect"}</h4> : " "}
-    </div>
+      {submitted ? (
+        <div
+          ref={feedbackRef}
+          tabIndex={-1}
+          role="status"
+          aria-live="polite"
+          aria-atomic="true"
+        >
+          <h4>
+            {score === 1 ? (
+              <>
+                <span className="sr-only">Your answer is </span>
+                Correct
+              </>
+            ) : (
+              <>
+                <span className="sr-only">Your answer is </span>
+                Incorrect
+              </>
+            )}
+          </h4>
+        </div>
+      ) : (
+        <div aria-hidden="true" style={{ minHeight: "1.5em" }}></div>
+      )}
+    </section>
   );
 }

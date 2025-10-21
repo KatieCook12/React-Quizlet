@@ -63,12 +63,29 @@
   font-weight: var(--fw-med);
   line-height: 1;
   cursor: pointer;
-  transition: background-color .2s ease, color .2s ease, border-color .2s ease;
   box-shadow: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .answer-button {
+    transition: none;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .answer-button {
+    transition: background-color .2s ease, color .2s ease, border-color .2s ease;
+  }
 }
 
 /* Hover (when selectable) */
 .answer-button:hover { background: var(--clr-purple-100); }
+
+/* Focus visible for keyboard navigation */
+.answer-button:focus-visible {
+  outline: 3px solid #FFBF47;
+  outline-offset: 2px;
+}
 
 /* Selected (pre-submit) */
 .answer-button.clicked {

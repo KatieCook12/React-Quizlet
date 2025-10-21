@@ -8,6 +8,11 @@ export default function ProgressBar({ answeredCount, totalQuestions }: ProgressB
 
   return (
     <div
+      role="progressbar"
+      aria-valuenow={answeredCount}
+      aria-valuemin={0}
+      aria-valuemax={totalQuestions}
+      aria-label={`Quiz progress: ${answeredCount} of ${totalQuestions} questions answered`}
       style={{
         display: "flex",
         height: "32px",
@@ -24,6 +29,7 @@ export default function ProgressBar({ answeredCount, totalQuestions }: ProgressB
       }}
     >
       <div
+        aria-hidden="true"
         style={{
           height: "100%",
           borderRadius: "100px 0 0 100px",
@@ -32,10 +38,11 @@ export default function ProgressBar({ answeredCount, totalQuestions }: ProgressB
           left: 0,
           top: 0,
           width: `${progressPercentage}%`,
-          transition: "width 0.3s ease",
         }}
+        className="progress-fill"
       ></div>
       <div
+        aria-hidden="true"
         style={{
           color: "#5D5D5D",
           textAlign: "center",
