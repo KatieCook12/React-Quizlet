@@ -120,11 +120,18 @@ export default function QuizPage() {
     }
   };
 
+  // Count how many questions have been answered
+  const answeredCount = answers.filter((a) => a !== null).length;
+
   return (
     <>
-    
-      {/* Top navigation (logo/back) */}
-      <Nav />
+
+      {/* Top navigation (logo/back) with progress bar */}
+      <Nav
+        showProgress={!submitted}
+        answered={answeredCount}
+        total={quizData.length}
+      />
 
       {/* Main quiz area */}
       <main id="page-top" className="quiz">
