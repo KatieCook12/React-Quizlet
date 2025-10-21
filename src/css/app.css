@@ -209,9 +209,10 @@ nav a{
 
 .progress-bar {
   flex: 1 0 0;
-  align-self: stretch;
+  height: 100%;
+  display: flex;
+  align-items: stretch;
   border-radius: 100px 0 0 100px;
-  background: var(--clr-green-600);
   overflow: hidden;
   position: relative;
 }
