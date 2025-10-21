@@ -13,6 +13,9 @@ import ResultsSection from "../components/ResultsSection";
 // Hooks
 import { useWindowSize } from "../hooks/UseWindowSize";
 
+// Types
+import { QuizQuestion, QuizFilters, OpenTDBResponse } from "../types";
+
 // Styles & assets
 import "../css/app.css";
 import "../css/quiz-page.css";
@@ -20,19 +23,19 @@ import DarkPurpleBackgroundEllipse from "../images/background-dark-purple-ellips
 const QuestionCard = React.lazy(() => import("../components/QuestionCard"));
 
 // Helpers
-const shuffleOptions = (array) => {
+const shuffleOptions = (array: string[]): string[] => {
   return [...array].sort(() => Math.random() - 0.5);
 };
 
 export default function QuizPage() {
-  const resultsRef = React.useRef(null);
+  const resultsRef = React.useRef<HTMLElement>(null);
 
   // Confetti sizing
   const { width, height } = useWindowSize();
 
   // Read filters (difficulty, category) from router state
   const { state } = useLocation();
-  const filters = state?.filters || {}; // { difficulty, category }
+  const filters: QuizFilters = (state as { filters?: QuizFilters })?.filters || {};
 
   // Build OpenTDB URL with chosen filters
   const params = new URLSearchParams({ amount: "5", type: "multiple" });
@@ -41,7 +44,7 @@ export default function QuizPage() {
   const API_URL = `https://opentdb.com/api.php?${params.toString()}`;
 
   // Quiz questions: [{ question, options[], correct_answer }]
-  const [quizData, setQuizData] = React.useState([]);
+  const [quizData, setQuizData] = React.useState<QuizQuestion[]>([]);
 
   // Track submission state
   const [submitted, setSubmitted] = React.useState(false);
@@ -50,22 +53,22 @@ export default function QuizPage() {
   const [score, setScore] = React.useState(0);
 
   // Selected option index per question (null when unanswered)
-  const [answers, setAnswers] = React.useState([]);
+  const [answers, setAnswers] = React.useState<(number | null)[]>([]);
 
   // Fetch quiz data from API and normalize it for rendering
   const fetchQuizData = React.useCallback(() => {
     fetch(API_URL)
       .then((res) => res.json())
-      .then((data) => {
+      .then((data: OpenTDBResponse) => {
         if (!data.results) return;
 
         // Map API items into a shape convenient for rendering/marking
-        const mapped = data.results.map((item) => ({
+        const mapped: QuizQuestion[] = data.results.map((item) => ({
           question: decode(item.question),
           options: shuffleOptions([
             ...item.incorrect_answers,
             item.correct_answer,
-          ]).map(decode),
+          ]).map((opt) => decode(opt)),
           correct_answer: decode(item.correct_answer),
         }));
 
@@ -89,7 +92,7 @@ export default function QuizPage() {
   const submitButtonClicked = () => {
     if (!submitted) {
       // Submitting answers: calculate score
-      const total = answers.reduce((sum, selectedIdx, i) => {
+      const total = answers.reduce<number>((sum, selectedIdx, i) => {
         if (selectedIdx == null) return sum;
         const q = quizData[i];
         return sum + (q.options[selectedIdx] === q.correct_answer ? 1 : 0);

@@ -14,23 +14,23 @@ export default function Nav() {
         
         // The <header> element wraps the top section of the page
         // Note: In React, you should use "className" instead of "class"
-        <nav class="nav" id="page-top">
-            
+        <nav className="nav" id="page-top">
+
             {/* Render the back button arrow image */}
             <Link to="/">
-            <img 
-                src={BackButtonArrow}                 
-                alt="White left pointing arrow"       
-                class="back-button"                  
+            <img
+                src={BackButtonArrow}
+                alt="White left pointing arrow"
+                className="back-button"
             />
             </Link>
 
             {/* Render the Quizlet white logo image */}
             <Link to="/quiz">
-            <img 
-                src={QuizletWhiteLogo}               
+            <img
+                src={QuizletWhiteLogo}
                 alt="White Quizlet logo with rocket"
-                class="logo"
+                className="logo"
             />
             </Link>
         </nav>

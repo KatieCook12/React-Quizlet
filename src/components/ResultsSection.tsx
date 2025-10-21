@@ -4,7 +4,14 @@
 import React from "react";
 import { highScorePhrases, lowScorePhrases, midScorePhrases } from "../phrases";
 
-const ResultsSection = React.forwardRef(function ResultsSection(
+interface ResultsSectionProps {
+  onButtonClick: () => void;
+  submitted: boolean;
+  scoreResults: number;
+  numberOfQuestions: number;
+}
+
+const ResultsSection = React.forwardRef<HTMLElement, ResultsSectionProps>(function ResultsSection(
   { onButtonClick, submitted, scoreResults, numberOfQuestions },
   ref
 ) {

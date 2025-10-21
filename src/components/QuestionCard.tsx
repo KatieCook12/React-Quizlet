@@ -1,6 +1,16 @@
 import Button from "./Button";
 import React from "react";
 
+interface QuestionCardProps {
+  number: number;
+  question: string;
+  options?: string[];
+  correct_answer: string;
+  submitted: boolean;
+  selectedIndex: number | null;
+  onSelect: (index: number) => void;
+}
+
 export default function QuestionCard({
   number,
   question,
@@ -9,15 +19,15 @@ export default function QuestionCard({
   submitted,
   selectedIndex,
   onSelect,
-}) {
+}: QuestionCardProps) {
   // Handle answer selection
-  const handleClick = (index) => {
+  const handleClick = (index: number) => {
 
     // Prevent changes after submission
     if (submitted) return;
 
     // Call parent function with selected option index
-    onSelect(index);             
+    onSelect(index);
   };
 
   // Check if an answer was selected

@@ -13,12 +13,13 @@ import DarkPurpleBackgroundEllipse from "../images/background-dark-purple-ellips
 // Router / React
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { QuizFilters } from "../types";
 
 export default function Home() {
   const navigate = useNavigate();
 
   // Handle form submit: read FormData and navigate to /quiz with filters in state
-  function handleStart(e) {
+  function handleStart(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     const form = e.currentTarget;
@@ -27,7 +28,7 @@ export default function Home() {
     const formData = new FormData(form);
 
     // Convert FormData entries to a plain object: { difficulty, category }
-    const data = Object.fromEntries(formData.entries());
+    const data = Object.fromEntries(formData.entries()) as QuizFilters;
 
     // Navigate to quiz and pass filters via router state
     navigate("/quiz", { state: { filters: data } });

@@ -8,6 +8,15 @@ import clsx from "clsx";
 import RedCircleWhiteCross from "../images/red-circle-white-cross.svg";
 import GreenCircleWhiteTick from "../images/green-circle-white-tick.svg";
 
+interface ButtonProps {
+  option: string;
+  isSelected: boolean;
+  onClick: () => void;
+  showAsCorrect: boolean;
+  showAsWrong: boolean;
+  showASDisabled: boolean;
+}
+
 export default function Button({
   option,
   isSelected,
@@ -15,7 +24,7 @@ export default function Button({
   showAsCorrect,
   showAsWrong,
   showASDisabled
-}) {
+}: ButtonProps) {
   
   // Apply button classes based on the props
   const className = clsx(
