@@ -46,6 +46,10 @@ export default function QuizPage() {
   // Quiz questions: [{ question, options[], correct_answer }]
   const [quizData, setQuizData] = React.useState<QuizQuestion[]>([]);
 
+  // Track loading and error states
+  const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState<string | null>(null);
+
   // Track submission state
   const [submitted, setSubmitted] = React.useState(false);
 
@@ -57,10 +61,20 @@ export default function QuizPage() {
 
   // Fetch quiz data from API and normalize it for rendering
   const fetchQuizData = React.useCallback(() => {
+    setLoading(true);
+    setError(null);
+
     fetch(API_URL)
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`API request failed with status ${res.status}`);
+        }
+        return res.json();
+      })
       .then((data: OpenTDBResponse) => {
-        if (!data.results) return;
+        if (!data.results || data.results.length === 0) {
+          throw new Error("No questions were returned from the API");
+        }
 
         // Map API items into a shape convenient for rendering/marking
         const mapped: QuizQuestion[] = data.results.map((item) => ({
@@ -77,8 +91,13 @@ export default function QuizPage() {
 
         // Reset selections for each question
         setAnswers(Array(mapped.length).fill(null));
+        setLoading(false);
       })
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        console.error("Error fetching quiz data:", err);
+        setError(err.message || "Failed to load quiz questions. Please try again.");
+        setLoading(false);
+      });
 
   // Re-fetch if filters (hence URL) change
   }, [API_URL]); 
@@ -111,6 +130,7 @@ export default function QuizPage() {
       setSubmitted(false);
       setScore(0);
       setAnswers([]);
+      setError(null);
       fetchQuizData();
 
       // Scroll back to the top of the page
@@ -134,39 +154,81 @@ export default function QuizPage() {
       {/* Main quiz area */}
       <main id="main-content" className="quiz" aria-label="Quiz questions">
         <h1 className="sr-only">Quiz Questions</h1>
-        <React.Suspense fallback={<h2>Loading questions...</h2>}>
 
-          {/* Render each question card with its options */}
-          {quizData.map((question: QuizQuestion, id: number) => (
-            <QuestionCard
-              key={id}
-              number={id + 1}
-              question={question.question}
-              options={question.options}
-              correct_answer={question.correct_answer}
-              submitted={submitted}
-              selectedIndex={answers[id]}
-              onSelect={(i: number) =>
-                setAnswers((prev: (number | null)[]) => {
-                  const next = [...prev];
+        {/* Show loading state */}
+        {loading && (
+          <div style={{ textAlign: 'center', color: 'white', fontSize: '1.25rem', padding: '2rem' }}>
+            Loading questions...
+          </div>
+        )}
 
-                  // Store selected option index for this question
-                  next[id] = i;
-                  return next;
-                })
-              }
-            />
-          ))}
-        </React.Suspense>
+        {/* Show error state */}
+        {error && (
+          <div style={{
+            textAlign: 'center',
+            color: 'white',
+            fontSize: '1.125rem',
+            padding: '2rem',
+            background: 'rgba(255, 255, 255, 0.1)',
+            borderRadius: '12px'
+          }}>
+            <p>{error}</p>
+            <button
+              onClick={fetchQuizData}
+              style={{
+                marginTop: '1rem',
+                padding: '12px 24px',
+                background: 'white',
+                color: 'var(--clr-purple-900)',
+                border: 'none',
+                borderRadius: '24px',
+                fontSize: '1rem',
+                fontWeight: 600,
+                cursor: 'pointer'
+              }}
+            >
+              Try Again
+            </button>
+          </div>
+        )}
+
+        {/* Show questions when loaded */}
+        {!loading && !error && (
+          <React.Suspense fallback={<h2>Loading questions...</h2>}>
+            {/* Render each question card with its options */}
+            {quizData.map((question: QuizQuestion, id: number) => (
+              <QuestionCard
+                key={id}
+                number={id + 1}
+                question={question.question}
+                options={question.options}
+                correct_answer={question.correct_answer}
+                submitted={submitted}
+                selectedIndex={answers[id]}
+                onSelect={(i: number) =>
+                  setAnswers((prev: (number | null)[]) => {
+                    const next = [...prev];
+
+                    // Store selected option index for this question
+                    next[id] = i;
+                    return next;
+                  })
+                }
+              />
+            ))}
+          </React.Suspense>
+        )}
 
         {/* Results block and primary action button */}
-        <ResultsSection
-          ref={resultsRef}
-          onButtonClick={submitButtonClicked}
-          submitted={submitted}
-          scoreResults={score}
-          numberOfQuestions={quizData.length}
-        />
+        {!loading && !error && (
+          <ResultsSection
+            ref={resultsRef}
+            onButtonClick={submitButtonClicked}
+            submitted={submitted}
+            scoreResults={score}
+            numberOfQuestions={quizData.length}
+          />
+        )}
 
         {/* Confetti celebration only after submission and if score > 0 */}
         {submitted && score > 0 ? (
