@@ -97,8 +97,22 @@ export default function QuizPage(): React.JSX.Element {
     <>
       <Nav />
 
+      {!submitted && (
+        <div style={{
+          position: "sticky",
+          top: "72px",
+          zIndex: 99,
+          background: "linear-gradient(180deg, #8439F6 0%, #5A27A8 100%)",
+          padding: "0 64px",
+          marginLeft: "-64px",
+          marginRight: "-64px",
+          paddingTop: "16px",
+        }}>
+          <ProgressBar answeredCount={answeredCount} totalQuestions={quizData.length} />
+        </div>
+      )}
+
       <main id="page-top" className="quiz">
-        {!submitted && <ProgressBar answeredCount={answeredCount} totalQuestions={quizData.length} />}
 
         <React.Suspense fallback={<h2>Loading questions...</h2>}>
           {quizData.map((question, id) => (
