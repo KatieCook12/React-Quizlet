@@ -138,7 +138,7 @@ export default function QuizPage(): React.JSX.Element {
           numberOfQuestions={quizData.length}
         />
 
-        {submitted ? (
+        {submitted && score > 0 ? (
           <Confetti
             width={width}
             height={height}
