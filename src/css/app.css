@@ -204,7 +204,6 @@ nav a{
   border-radius: 100px;
   background: var(--clr-white);
   width: 100%;
-  max-width: 640px;
 }
 
 .progress-bar {
