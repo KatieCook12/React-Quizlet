@@ -92,7 +92,7 @@ export default function QuizPage() {
   const submitButtonClicked = () => {
     if (!submitted) {
       // Submitting answers: calculate score
-      const total = answers.reduce<number>((sum, selectedIdx, i) => {
+      const total = answers.reduce<number>((sum: number, selectedIdx: number | null, i: number) => {
         if (selectedIdx == null) return sum;
         const q = quizData[i];
         return sum + (q.options[selectedIdx] === q.correct_answer ? 1 : 0);
@@ -131,7 +131,7 @@ export default function QuizPage() {
         <React.Suspense fallback={<h2>Loading questions...</h2>}>
 
           {/* Render each question card with its options */}
-          {quizData.map((question, id) => (
+          {quizData.map((question: QuizQuestion, id: number) => (
             <QuestionCard
               key={id}
               number={id + 1}
@@ -140,8 +140,8 @@ export default function QuizPage() {
               correct_answer={question.correct_answer}
               submitted={submitted}
               selectedIndex={answers[id]}
-              onSelect={(i) =>
-                setAnswers((prev) => {
+              onSelect={(i: number) =>
+                setAnswers((prev: (number | null)[]) => {
                   const next = [...prev];
 
                   // Store selected option index for this question

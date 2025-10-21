@@ -12,8 +12,8 @@ interface ResultsSectionProps {
 }
 
 const ResultsSection = React.forwardRef<HTMLElement, ResultsSectionProps>(function ResultsSection(
-  { onButtonClick, submitted, scoreResults, numberOfQuestions },
-  ref
+  { onButtonClick, submitted, scoreResults, numberOfQuestions }: ResultsSectionProps,
+  ref: React.Ref<HTMLElement>
 ) {
   const headingId = React.useId();
   const regionId = React.useId();
