@@ -37,13 +37,13 @@ export default function QuestionCard({
   const score = isAnswered && options[selectedIndex] === correct_answer ? 1 : 0;
 
   return (
-    <div className="question-card">
+    <article className="question-card" aria-labelledby={`question-${number}`}>
       <h3>{`Question ${number} of 5`}</h3>
 
       <div className="question-and-options">
-        <h2>{question}</h2>
+        <h2 id={`question-${number}`}>{question}</h2>
 
-        <div className="options">
+        <div className="options" role="group" aria-label="Answer choices">
           {options.map((option, i) => {
 
             // Check if option is selected
@@ -77,7 +77,11 @@ export default function QuestionCard({
       </div>
 
       {/* Show result text only after submission */}
-      {submitted ? <h4>{score === 1 ? "Correct" : "Incorrect"}</h4> : " "}
-    </div>
+      {submitted && (
+        <h4 role="status" aria-live="polite">
+          {score === 1 ? "Correct" : "Incorrect"}
+        </h4>
+      )}
+    </article>
   );
 }

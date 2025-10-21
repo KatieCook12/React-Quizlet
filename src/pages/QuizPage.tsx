@@ -134,7 +134,8 @@ export default function QuizPage() {
       />
 
       {/* Main quiz area */}
-      <main id="page-top" className="quiz">
+      <main id="main-content" className="quiz" aria-label="Quiz questions">
+        <h1 className="sr-only">Quiz Questions</h1>
         <React.Suspense fallback={<h2>Loading questions...</h2>}>
 
           {/* Render each question card with its options */}
@@ -175,6 +176,7 @@ export default function QuizPage() {
             width={width}
             height={height}
             style={{ position: "fixed", inset: 0, pointerEvents: "none" }}
+            aria-hidden="true"
           />
         ) : null}
       </main>
@@ -182,8 +184,9 @@ export default function QuizPage() {
       {/* Decorative background ellipse (fixed, behind content) */}
       <img
         src={DarkPurpleBackgroundEllipse}
-        alt="Dark purple background ellipse"
+        alt=""
         className="dark-purple-background-ellipse"
+        aria-hidden="true"
       />
     </>
   );

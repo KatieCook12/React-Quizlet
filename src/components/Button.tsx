@@ -41,14 +41,23 @@ export default function Button({
     ? RedCircleWhiteCross
     : null;
 
+  // Determine aria-label for accessibility
+  const ariaLabel = showAsCorrect
+    ? `${option} - Correct answer`
+    : showAsWrong
+    ? `${option} - Incorrect answer`
+    : option;
+
   return (
     <button
       className={className}
       onClick={onClick}
-      disabled={showASDisabled ? true : false}
+      disabled={showASDisabled}
+      aria-pressed={isSelected}
+      aria-label={ariaLabel}
     >
-      {icon && <img src={icon} alt="icon" />}
-      {option}
+      {icon && <img src={icon} alt="" aria-hidden="true" />}
+      <span>{option}</span>
     </button>
   );
 }

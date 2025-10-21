@@ -37,24 +37,31 @@ export default function Home() {
   return (
     <>
       {/* Main hero section */}
-      <main className="home-page">
+      <main className="home-page" id="main-content">
 
         {/* Brand logo */}
         <img
           className="logo"
           src={QuizletWhiteLogo}
-          alt="White Quizlet logo with rocket"
+          alt="Quizlet"
         />
 
         {/* Start form */}
-        <form onSubmit={handleStart}>
+        <form onSubmit={handleStart} aria-label="Quiz setup">
+          <h1 className="sr-only">Configure Your Quiz</h1>
 
         <div className="drop-down-selections">
 
           {/* Difficulty selector */}
           <div className="drop-down">
             <label htmlFor="difficulty">Select difficulty</label>
-            <select className="select" id="difficulty" name="difficulty" defaultValue="easy">
+            <select
+              className="select"
+              id="difficulty"
+              name="difficulty"
+              defaultValue="easy"
+              aria-required="true"
+            >
               <option value="" disabled>
                 Any difficulty
               </option>
@@ -67,7 +74,13 @@ export default function Home() {
           {/* Category selector */}
           <div className="drop-down">
             <label htmlFor="category">Select category</label>
-            <select className="select" id="category" name="category" defaultValue="9">
+            <select
+              className="select"
+              id="category"
+              name="category"
+              defaultValue="9"
+              aria-required="true"
+            >
               <option value="" disabled>
                 Any category
               </option>
@@ -91,8 +104,9 @@ export default function Home() {
       {/* Background ellipse (fixed, behind content) */}
       <img
         src={DarkPurpleBackgroundEllipse}
-        alt="Dark purple background ellipse"
+        alt=""
         className="dark-purple-background-ellipse"
+        aria-hidden="true"
       />
     </>
   );

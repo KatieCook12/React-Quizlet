@@ -330,3 +330,46 @@ option { color: var(--clr-black); }
   border: 0 !important;
 }
 
+/* =========================================================
+   Accessibility improvements
+   ========================================================= */
+
+/* Skip link for keyboard navigation */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--clr-green-100);
+  color: var(--clr-black);
+  padding: 12px 24px;
+  text-decoration: none;
+  font-weight: var(--fw-bold);
+  z-index: 100;
+  border-radius: 0 0 var(--radius-pill) 0;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* Enhanced focus styles for keyboard navigation */
+a:focus-visible,
+button:focus-visible,
+select:focus-visible {
+  outline: 3px solid var(--clr-green-100);
+  outline-offset: 2px;
+}
+
+/* Focus visible for answer buttons */
+.answer-button:focus-visible {
+  outline: 3px solid var(--clr-green-100);
+  outline-offset: 2px;
+}
+
+/* Remove default focus outline, rely on focus-visible */
+a:focus:not(:focus-visible),
+button:focus:not(:focus-visible),
+select:focus:not(:focus-visible) {
+  outline: none;
+}
+

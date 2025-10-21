@@ -12,28 +12,35 @@ interface NavProps {
 
 export default function Nav({ showProgress = false, answered = 0, total = 5 }: NavProps) {
     return (
-        <nav className="nav" id="page-top">
-            <div className="nav-content">
-                <Link to="/">
-                    <img
-                        src={BackButtonArrow}
-                        alt="White left pointing arrow"
-                        className="back-button"
-                    />
-                </Link>
+        <>
+            <a href="#main-content" className="skip-link">
+                Skip to main content
+            </a>
+            <nav className="nav" id="page-top" aria-label="Main navigation">
+                <div className="nav-content">
+                    <Link to="/" aria-label="Go back to home page">
+                        <img
+                            src={BackButtonArrow}
+                            alt=""
+                            className="back-button"
+                            aria-hidden="true"
+                        />
+                    </Link>
 
-                <Link to="/quiz">
-                    <img
-                        src={QuizletWhiteLogo}
-                        alt="White Quizlet logo with rocket"
-                        className="logo"
-                    />
-                </Link>
-            </div>
+                    <Link to="/quiz" aria-label="Quizlet home">
+                        <img
+                            src={QuizletWhiteLogo}
+                            alt=""
+                            className="logo"
+                            aria-hidden="true"
+                        />
+                    </Link>
+                </div>
 
-            {showProgress && (
-                <ProgressBar answered={answered} total={total} />
-            )}
-        </nav>
+                {showProgress && (
+                    <ProgressBar answered={answered} total={total} />
+                )}
+            </nav>
+        </>
     )
 }
