@@ -13,6 +13,7 @@
   --clr-purple-100: #E4D9F5;
 
   --clr-green-700: #2B8053;
+  --clr-green-600: #2B7F53;
   --clr-green-100: #D2EDDF;
 
   --clr-red-700: #900032;
@@ -194,34 +195,43 @@ nav a{
 /* Progress bar container */
 .progress-bar-container {
   display: flex;
+  height: 32px;
+  padding: 4px 12px 4px 4px;
   align-items: center;
   gap: var(--space-3);
+  flex-shrink: 0;
+  align-self: stretch;
+  border-radius: 100px;
+  background: var(--clr-white);
   width: 100%;
   max-width: 640px;
 }
 
 .progress-bar {
-  flex: 1;
-  height: 12px;
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 100px;
+  flex: 1 0 0;
+  align-self: stretch;
+  border-radius: 100px 0 0 100px;
+  background: var(--clr-green-600);
   overflow: hidden;
+  position: relative;
 }
 
 .progress-bar-fill {
   height: 100%;
-  background: var(--clr-green-100);
-  border-radius: 100px;
+  background: var(--clr-green-600);
+  border-radius: 100px 0 0 100px;
   transition: width 0.3s ease;
 }
 
 .progress-text {
-  color: var(--clr-white);
-  font-size: 0.938em;
+  color: var(--clr-gray-700);
+  text-align: center;
+  font-family: var(--ff-sans);
+  font-size: 15px;
+  font-style: normal;
   font-weight: var(--fw-semi);
+  line-height: normal;
   white-space: nowrap;
-  min-width: 40px;
-  text-align: right;
 }
 
 /* When the screen size width is maximum 430px */
