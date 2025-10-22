@@ -1,50 +1,48 @@
-<<<<<<< HEAD
+import React from "react";
 import clsx from "clsx";
 import RedCircleWhiteCross from "../images/red-circle-white-cross.svg";
 import GreenCircleWhiteTick from "../images/green-circle-white-tick.svg";
 
+/**
+ * ButtonProps defines the expected properties for the Button component.
+ *
+ * - option: Text label displayed on the button.
+ * - isSelected: Whether this button is currently selected.
+ * - onClick: Callback triggered when the button is clicked.
+ * - showAsCorrect / showAsWrong: Visual indicators for correct or incorrect answers.
+ * - showAsDisabled: Disables the button when true (prevents interaction).
+ * - submitted: Whether the user has submitted their answer.
+ * - isCorrectOption: Marks the correct option after submission.
+ */
 type ButtonProps = {
   option: string;
   isSelected: boolean;
   onClick: () => void;
   showAsCorrect: boolean;
   showAsWrong: boolean;
-  showASDisabled: boolean;
+  showAsDisabled: boolean; // disables interaction once submission is done
   submitted: boolean;
   isCorrectOption: boolean;
 };
 
-=======
-// Import utility and assets
-import clsx from "clsx"; // Utility for conditional className management
-import RedCircleWhiteCross from "../images/red-circle-white-cross.svg";
-import GreenCircleWhiteTick from "../images/green-circle-white-tick.svg";
-
-// Define the type for props accepted by the Button component
-type ButtonProps = {
-  option: string;              // Text shown on the button (answer option)
-  isSelected: boolean;         // Whether this option is currently selected
-  onClick: () => void;         // Function triggered when the button is clicked
-  showAsCorrect: boolean;      // Whether this button should appear as the correct answer
-  showAsWrong: boolean;        // Whether this button should appear as the wrong answer
-  showASDisabled: boolean;     // Whether this button should be disabled (non-interactive)
-  submitted: boolean;          // Whether the user has submitted their answer
-  isCorrectOption: boolean;    // Whether this is the correct option (used after submission)
-};
-
-// Button component representing a selectable answer choice
->>>>>>> 32b3d63 (Loading progress bar)
+/**
+ * Button component represents an answer choice in a quiz or questionnaire.
+ *
+ * It dynamically updates its appearance and accessibility labels
+ * based on the quiz state (e.g., selected, correct, wrong, or disabled).
+ */
 export default function Button({
   option,
   isSelected,
   onClick,
   showAsCorrect,
   showAsWrong,
-  showASDisabled,
+  showAsDisabled,
   submitted,
-  isCorrectOption
+  isCorrectOption,
 }: ButtonProps): React.JSX.Element {
-<<<<<<< HEAD
+  // Dynamically apply CSS classes based on the current button state.
+  // clsx is used for conditional class management, improving readability.
   const className = clsx(
     "answer-button",
     isSelected && "clicked",
@@ -52,82 +50,47 @@ export default function Button({
     showAsWrong && "wrong"
   );
 
-=======
-  
-  // Dynamically compute the button's CSS classes using clsx
-  const className = clsx(
-    "answer-button",        // Base class
-    isSelected && "clicked", // Add 'clicked' when selected
-    showAsCorrect && "correct", // Add 'correct' style when appropriate
-    showAsWrong && "wrong"      // Add 'wrong' style when appropriate
-  );
+  // Determine which icon to show (correct or wrong) based on the button state.
+  // Only show icons after submission for selected answers.
+  const icon =
+    showAsCorrect && isSelected
+      ? GreenCircleWhiteTick
+      : showAsWrong
+      ? RedCircleWhiteCross
+      : null;
 
-  // Choose the correct icon (tick or cross) based on button state
->>>>>>> 32b3d63 (Loading progress bar)
-  const icon = showAsCorrect && isSelected
-    ? GreenCircleWhiteTick
-    : showAsWrong
-    ? RedCircleWhiteCross
-    : null;
-
-<<<<<<< HEAD
+  /**
+   * getAriaLabel()
+   * Returns a descriptive ARIA label for screen readers.
+   *
+   * This improves accessibility by clearly communicating
+   * whether the selected answer is correct or incorrect.
+   */
   const getAriaLabel = (): string => {
     if (submitted) {
-=======
-  // Function to generate descriptive aria-labels for screen readers
-  const getAriaLabel = (): string => {
-    if (submitted) {
-      // If user submitted, describe the state of their answer
->>>>>>> 32b3d63 (Loading progress bar)
-      if (showAsCorrect && isSelected) {
+      if (showAsCorrect && isSelected)
         return `${option} - Your answer - Correct`;
-      }
-      if (showAsWrong) {
-        return `${option} - Your answer - Incorrect`;
-      }
-      if (isCorrectOption) {
-        return `${option} - Correct answer`;
-      }
+      if (showAsWrong) return `${option} - Your answer - Incorrect`;
+      if (isCorrectOption) return `${option} - Correct answer`;
     }
-<<<<<<< HEAD
-=======
-    // Default label when quiz not submitted
->>>>>>> 32b3d63 (Loading progress bar)
     return option;
   };
 
   return (
     <button
-<<<<<<< HEAD
-      role="radio"
+      role="radio" // allows screen readers to interpret this as part of a radio group
       aria-checked={isSelected}
       aria-label={getAriaLabel()}
       className={className}
       onClick={onClick}
-      disabled={showASDisabled}
+      disabled={showAsDisabled}
       type="button"
     >
-      {icon && <img src={icon} alt="" aria-hidden="true" />}
-      <span aria-hidden="true">{option}</span>
-    </button>
-  );
-}
-=======
-      role="radio"                 // Use radio role for ARIA grouping
-      aria-checked={isSelected}    // Indicate selection state to assistive tech
-      aria-label={getAriaLabel()}  // Provide contextual label for screen readers
-      className={className}        // Apply computed class names
-      onClick={onClick}            // Handle user click
-      disabled={showASDisabled}    // Disable button when necessary
-      type="button"                // Ensure button type is explicitly set
-    >
-      
-      {/* Show feedback icon (tick or cross) when applicable */}
+      {/* Render visual feedback icon when appropriate */}
       {icon && <img src={icon} alt="" aria-hidden="true" />}
 
-      {/* The option text, hidden from screen readers since aria-label handles it */}
+      {/* Display the button text (hidden from screen readers to avoid redundancy) */}
       <span aria-hidden="true">{option}</span>
     </button>
   );
 }
->>>>>>> 32b3d63 (Loading progress bar)

@@ -1,94 +1,53 @@
+/**
+ * ProgressBarProps defines the required properties for the ProgressBar component.
+ *
+ * - answeredCount: Number of questions the user has completed.
+ * - totalQuestions: Total number of questions in the quiz.
+ */
 type ProgressBarProps = {
   answeredCount: number;
   totalQuestions: number;
 };
 
-<<<<<<< HEAD
-export default function ProgressBar({ answeredCount, totalQuestions }: ProgressBarProps): React.JSX.Element {
-  const progressPercentage = totalQuestions > 0 ? (answeredCount / totalQuestions) * 100 : 0;
-=======
-// ProgressBar component: displays quiz progress visually and accessibly
+/**
+ * ProgressBar component visually and accessibly represents quiz completion.
+ *
+ * It calculates and displays the user’s progress as a percentage-filled bar.
+ * The component also provides proper ARIA attributes to ensure screen readers
+ * can accurately describe the quiz progress.
+ */
 export default function ProgressBar({
   answeredCount,
   totalQuestions,
 }: ProgressBarProps): React.JSX.Element {
+  // Calculate the current progress percentage.
+  // Protects against division by zero by returning 0 when totalQuestions = 0.
   const progressPercentage =
     totalQuestions > 0 ? (answeredCount / totalQuestions) * 100 : 0;
->>>>>>> 32b3d63 (Loading progress bar)
 
   return (
     <div
-      role="progressbar"
-      aria-valuenow={answeredCount}
-      aria-valuemin={0}
-      aria-valuemax={totalQuestions}
+      role="progressbar" // identifies the element as a progress indicator for assistive tech
+      aria-valuenow={answeredCount} // current progress value
+      aria-valuemin={0} // minimum value (start of progress)
+      aria-valuemax={totalQuestions} // maximum value (end of progress)
       aria-label={`Quiz progress: ${answeredCount} of ${totalQuestions} questions answered`}
-<<<<<<< HEAD
-      style={{
-        display: "flex",
-        height: "32px",
-        padding: "4px 12px 4px 4px",
-        alignItems: "center",
-        gap: "12px",
-        flexShrink: 0,
-        width: "100%",
-        borderRadius: "100px",
-        background: "#FFF",
-        position: "relative",
-        marginBottom: "24px",
-        overflow: "hidden",
-      }}
-    >
-      <div
-        aria-hidden="true"
-        style={{
-          height: "100%",
-          borderRadius: "100px 0 0 100px",
-          background: "#2B7F53",
-          position: "absolute",
-          left: 0,
-          top: 0,
-          width: `${progressPercentage}%`,
-        }}
-        className="progress-fill"
-      ></div>
-      <div
-        aria-hidden="true"
-        style={{
-          color: "#5D5D5D",
-          textAlign: "center",
-          fontFamily: "Nunito",
-          fontSize: "15px",
-          fontStyle: "normal",
-          fontWeight: 600,
-          lineHeight: "normal",
-          position: "relative",
-          zIndex: 1,
-          marginLeft: "auto",
-        }}
-      >
-        <span
-          style={{
-            fontFamily: "Nunito, -apple-system, Roboto, Helvetica, sans-serif",
-            fontWeight: 700,
-            fontSize: "15px",
-            color: "rgba(93,93,93,1)",
-          }}
-        >
-          {answeredCount}/{totalQuestions}
-        </span>
-=======
       className="progress"
-
+      // CSS custom property used to dynamically control the fill width via styles
       style={{ ["--progress" as any]: `${progressPercentage}%` }}
     >
-      {/* Fill bar (visual only) */}
+      {/* 
+        Visual fill bar that expands according to the user's progress.
+        Hidden from screen readers since ARIA attributes already provide this info.
+      */}
       <div aria-hidden="true" className="progress__fill" />
 
-      {/* Numeric label (visual only; ARIA handles semantics) */}
+      {/* 
+        Displays numerical progress (e.g., "3/10") for visual feedback.
+        Marked aria-hidden because the same information is conveyed accessibly above.
+      */}
       <div aria-hidden="true" className="progress__label">
         {answeredCount}/{totalQuestions}
->>>>>>> 32b3d63 (Loading progress bar)
       </div>
     </div>
   );
